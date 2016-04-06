@@ -38,11 +38,19 @@ def test_first_node_children():
 def test_empty_tree_size():
     from bst import BinarySearchTree
     test_tree = BinarySearchTree()
-    assert test_tree.size == 0
+    assert test_tree.size() == 0
 
 
 def test_first_entry_size():
     from bst import BinarySearchTree
     test_tree = BinarySearchTree()
     test_tree.insert(8)
-    assert test_tree.size == 1
+    assert test_tree.size() == 1
+
+
+def test_insert_first_child():
+    from bst import BinarySearchTree
+    test_tree = BinarySearchTree([9])
+    test_tree.insert(10)
+    test_tree.insert(3)
+    assert test_tree.root.right.val == 10
