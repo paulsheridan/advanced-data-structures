@@ -72,15 +72,23 @@ class Tree(object):
             depth_size = max(Tree.depth(self.left), Tree.depth(self.right)) + 1
             return depth_size
 
+    def balance(self):
+        """Balance the tree."""
+        if self is None:
+            return 0
+        else:
+            balance_left = Tree.depth(self.left)
+            balance_right = Tree.depth(self.right)
+            return balance_left - balance_right
 
 bst = Tree(10)
-bst.insert(5)
-bst.insert(200)
-bst.insert(45)
+bst.insert(11)
 bst.insert(1)
-bst.insert(4)
-bst.insert(2000)
 bst.insert(3)
+bst.insert(4)
+bst.insert(5)
+bst.insert(2)
+bst.insert(9)
 print("***********************")
 # bst.contains(1)
 # bst.contains(5)
@@ -89,3 +97,4 @@ print("***********************")
 
 bst.size()
 print(bst.depth())
+print(bst.balance())
