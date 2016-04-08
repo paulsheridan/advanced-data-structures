@@ -9,7 +9,7 @@ class Tree(object):
             self.parent = None
             self.data = data
             self.depth_count = 1
-            self.__size = 0
+            self.__size = 1
         except TypeError:
             return("Please plant a root ex. 'Tree(10)'")
 
@@ -81,20 +81,20 @@ class Tree(object):
             balance_right = Tree.depth(self.right)
             return balance_left - balance_right
 
-bst = Tree(10)
-bst.insert(11)
-bst.insert(1)
-bst.insert(3)
-bst.insert(4)
-bst.insert(5)
-bst.insert(2)
-bst.insert(9)
-print("***********************")
-# bst.contains(1)
-# bst.contains(5)
-# bst.contains(200)
-# bst.contains(45)
-
-bst.size()
-print(bst.depth())
-print(bst.balance())
+# bst = Tree(10)
+# bst.insert(11)
+# bst.insert(1)
+# bst.insert(3)
+# bst.insert(4)
+# bst.insert(5)
+# bst.insert(2)
+# bst.insert(9)
+# print("***********************")
+# # bst.contains(1)
+# # bst.contains(5)
+# # bst.contains(200)
+# # bst.contains(45)
+#
+# bst.size()
+# print(bst.depth())
+# print(bst.balance())
