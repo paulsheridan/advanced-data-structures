@@ -8,7 +8,6 @@ class Tree(object):
             self.right = None
             self.parent = None
             self.data = data
-            self.depth_count = 1
             self.__size = 1
         except TypeError:
             return("Please plant a root ex. 'Tree(10)'")
@@ -59,10 +58,6 @@ class Tree(object):
         """Return size of tree."""
         print(self.__size)
         return self.__size
-
-    def _depth_inc(self):
-        self.depth_count += 1
-        return self.depth_count
 
     def depth(self):
         """Return depth of the tree."""
