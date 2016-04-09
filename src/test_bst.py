@@ -1,9 +1,28 @@
 import pytest
+import random
 
 
 TOTAL = list(range(100))
 EVEN = TOTAL[2::2]
 ODD = TOTAL[1::2]
+
+
+@pytest.fixture(scope='function')
+def test_tree():
+    from bst import Tree
+    tree = Tree(5)
+    return tree
+
+
+@pytest.fixture(scope='session')
+def balanced_tree():
+    from bst import Tree
+    tree = Tree(50)
+    left_num = random.randint(1, 49)
+    right_num = random.randint(51, 99)
+    tree.insert(left_num)
+    tree.insert(right_num)
+    return tree
 
 
 @pytest.mark.parametrize('even', EVEN)
@@ -21,13 +40,6 @@ def test_contains_false(even, odd):
     tree = Tree(216)
     tree.insert(even)
     assert not tree.contains(odd)
-
-
-@pytest.fixture(scope='function')
-def test_tree():
-    from bst import Tree
-    tree = Tree(5)
-    return tree
 
 
 def test_null_tree_error():
@@ -69,3 +81,7 @@ def test_first_entry_size(test_tree):
 def test_insert_first_child(test_tree):
     test_tree.insert(10)
     assert test_tree.right.data == 10
+
+
+def test_even_balance(balanced_tree):
+    assert balanced_tree.balance() == 0
