@@ -1,3 +1,6 @@
+from collections import deque
+
+
 class Tree(object):
     """Single class implementation of BST."""
 
@@ -77,12 +80,52 @@ class Tree(object):
             return balance_left - balance_right
 
     def in_order(self):
-        """In order traversal."""
+        """Return generator to traverse nodes in order."""
         if self:
-            yield from self.in_order(self.left)
+            # import pdb; pdb.set_trace()
+            if self.left:
+                for node in self.left.in_order():
+                    yield node
             yield self.data
-            yield from self.in_order(self.right)
-            return [node for node in bst.in_order()]
+            if self.right:
+                for node in self.right.in_order():
+                    yield node
+
+    def pre_order(self):
+        """Return generator to traverse nodes in pre-order."""
+        if self.data is not None:
+            yield self.data
+        if self.left is not None:
+            for node in self.left.pre_order():
+                yield node
+        if self.right is not None:
+            for node in self.right.pre_order():
+                yield node
+
+    def post_order(self):
+        """Return generator to traverse nodes in post-order."""
+        if self.left is not None:
+            for node in self.left.post_order():
+                yield node
+        if self.right is not None:
+            for node in self.right.post_order():
+                yield node
+        if self.data is not None:
+            yield self.data
+
+    def breadth_first(self):
+        """Return generator that runs breadth first traversal."""
+        cont = deque()
+        cont.append(self)
+        while cont.maxlen() > 0:
+            tree = cont.pop()
+            if tree.data is not None:
+                yield tree.data
+            if tree.left is not None:
+                cont.append(tree.left)
+            if tree.right is not None:
+                cont.append(tree.right)
+
 
 bst = Tree(10)
 bst.insert(11)
@@ -98,5 +141,5 @@ print("***********************")
 # bst.contains(200)
 # bst.contains(45)
 
-bst.size()
-print(bst.in_order())
+# bst.size()
+bst.breadth_first()
