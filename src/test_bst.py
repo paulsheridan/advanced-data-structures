@@ -7,12 +7,22 @@ EVEN = TOTAL[2::2]
 ODD = TOTAL[1::2]
 LESSER = TOTAL[:52]
 GREATER = TOTAL[50:]
+TEST_LIST = [9, 3, 22, 7, 1, 55]
 
 
 @pytest.fixture(scope='function')
 def test_tree():
     from bst import Tree
     tree = Tree(5)
+    return tree
+
+
+@pytest.fixture(scope='function')
+def test_trav_tree():
+    from bst import Tree
+    tree = Tree(5)
+    for item in TEST_LIST:
+        tree.insert(item)
     return tree
 
 
@@ -134,3 +144,47 @@ def test_uneven_right(num):
     if num > 2 and num % 2 == 0:
         right_tree = insert_unbalanced_right(num)
         assert right_tree.balance() == (math.ceil(num/2)) * -1
+
+
+def test_in_order(test_trav_tree):
+    return_val = [x for x in test_trav_tree.in_order()]
+    assert return_val == [1, 3, 5, 7, 9, 22, 55]
+
+
+def test_pre_order(test_trav_tree):
+    return_val = [x for x in test_trav_tree.pre_order()]
+    assert return_val == [5, 3, 1, 9, 7, 22, 55]
+
+
+def test_post_order(test_trav_tree):
+    return_val = [x for x in test_trav_tree.post_order()]
+    assert return_val == [1, 3, 7, 55, 22, 9, 5]
+
+
+# def test_breadth_first(test_trav_tree):
+#     return_val = [x for x in test_trav_tree.breadth_first()]
+#     assert return_val == [5, 9, 3, 22, 7, 1, 55]
+
+
+@pytest.mark.parametrize('num', TOTAL)
+def test_traversal_in_singe(num, test_tree):
+    from bst import Tree
+    tree = Tree(num)
+    result = [x for x in tree.in_order()]
+    assert result == [num]
+
+
+@pytest.mark.parametrize('num', TOTAL)
+def test_traversal_pre_single(num, test_tree):
+    from bst import Tree
+    tree = Tree(num)
+    result = [x for x in tree.pre_order()]
+    assert result == [num]
+
+
+@pytest.mark.parametrize('num', TOTAL)
+def test_traversal_post_single(num, test_tree):
+    from bst import Tree
+    tree = Tree(num)
+    result = [x for x in tree.post_order()]
+    assert result == [num]
