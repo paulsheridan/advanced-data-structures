@@ -126,11 +126,11 @@ def test_even_balance(num):
 def test_uneven_left(num):
     if num > 2 and num % 2 == 0:
         left_tree = insert_unbalanced_left(num)
-        assert left_tree.balance() == math.ceil(num/2)
+        assert left_tree.balance() == math.ceil(num / 2)
 
 
 @pytest.mark.parametrize('num', HALF)
 def test_uneven_right(num):
     if num > 2 and num % 2 == 0:
         right_tree = insert_unbalanced_right(num)
-        assert right_tree.balance() == (math.ceil(num/2)) * -1
+        assert right_tree.balance() == (math.ceil(num / 2)) * -1

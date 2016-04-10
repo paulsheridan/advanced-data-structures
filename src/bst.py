@@ -64,8 +64,9 @@ class Tree(object):
         if self is None:
             return 0
         else:
-            depth_size = max(Tree.depth(self.left), Tree.depth(self.right)) + 1
-            return depth_size
+            left_depth = self.left.depth() if self.left else 0
+            right_depth = self.right.depth() if self.right else 0
+            return max(left_depth, right_depth) + 1
 
     def balance(self):
         """Balance the tree."""
@@ -75,28 +76,3 @@ class Tree(object):
             balance_left = Tree.depth(self.left)
             balance_right = Tree.depth(self.right)
             return balance_left - balance_right
-
-    def in_order(self):
-        """In order traversal."""
-        if self:
-            yield from self.in_order(self.left)
-            yield self.data
-            yield from self.in_order(self.right)
-            return [node for node in bst.in_order()]
-
-bst = Tree(10)
-bst.insert(11)
-bst.insert(1)
-bst.insert(3)
-bst.insert(4)
-bst.insert(5)
-bst.insert(2)
-bst.insert(9)
-print("***********************")
-# bst.contains(1)
-# bst.contains(5)
-# bst.contains(200)
-# bst.contains(45)
-
-bst.size()
-print(bst.in_order())
