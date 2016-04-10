@@ -148,21 +148,56 @@ class Tree(object):
             if tree.right is not None:
                 cont.append(tree.right)
 
+    def contains(self, data):
+        """Check tree for data."""
+        try:
+            if self.data:
+                if data < self.data:
+                    if self.left.data and data == self.left.data:
+                        print("True")
+                        return True
+                    else:
+                        self.left.contains(data)
+                elif data > self.data:
+                    if self.right.data and data == self.right.data:
+                        print("True")
+                        return True
+                    else:
+                        self.right.contains(data)
+                elif data == self.data:
+                    print("True")
+                    return True
+        except AttributeError:
+            print("False")
+            return False
+
+    def _search(self, data):
+        """Search for data in tree."""
+        if self.data == data:
+            return self
+        left_contains = None
+        right_contains = None
+        if self.left is not None:
+            left_contains = self.left._search(data)
+        if self.right is not None:
+            right_contains = self.right._search(data)
+        return left_contains or right_contains
+
     def delete(self, data):
         """Delete data point from BST."""
         import pdb; pdb.set_trace()
-        target = self.contains(data)
+        target = self._search(data)
         if not target:
             return None
-        if target.parent is True:
+        elif target.parent is not None:
             if target.parent.left == target:
                 target.parent.left = None
-            elif target.parent.left == target:
+            elif target.parent.right == target:
                 target.parent.left = None
             target.parent = None
-            for node in target.breadth_first():
-                if node != target.node:
-                    self.insert(node)
+            for data in target.breadth_first():
+                if data != target.data:
+                    self.insert(data)
 
 
 bst = Tree(10)
@@ -173,4 +208,4 @@ bst.insert(4)
 bst.insert(5)
 bst.insert(2)
 bst.insert(9)
-bst.delete(200)
+bst.delete(9)
