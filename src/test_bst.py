@@ -161,11 +161,6 @@ def test_post_order(test_trav_tree):
     assert return_val == [1, 3, 7, 55, 22, 9, 5]
 
 
-# def test_breadth_first(test_trav_tree):
-#     return_val = [x for x in test_trav_tree.breadth_first()]
-#     assert return_val == [5, 9, 3, 22, 7, 1, 55]
-
-
 @pytest.mark.parametrize('num', TOTAL)
 def test_traversal_in_singe(num, test_tree):
     from bst import Tree
