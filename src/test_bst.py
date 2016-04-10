@@ -117,16 +117,20 @@ def test_insert_first_child(test_tree):
 
 @pytest.mark.parametrize('num', HALF)
 def test_even_balance(num):
-    balanced_tree = insert_balanced(num)
-    assert balanced_tree.balance() == 0
+    if num > 2:
+        balanced_tree = insert_balanced(num)
+        assert balanced_tree.balance() == 0
+
 
 @pytest.mark.parametrize('num', HALF)
 def test_uneven_left(num):
-    left_tree = insert_unbalanced_left(num)
-    assert left_tree.balance() == math.ceil(num/2)
+    if num > 2 and num % 2 == 0:
+        left_tree = insert_unbalanced_left(num)
+        assert left_tree.balance() == math.ceil(num/2)
 
 
 @pytest.mark.parametrize('num', HALF)
 def test_uneven_right(num):
-    right_tree = insert_unbalanced_right(num)
-    assert right_tree.balance() == (math.ceil(num/2)) * -1
+    if num > 2 and num % 2 == 0:
+        right_tree = insert_unbalanced_right(num)
+        assert right_tree.balance() == (math.ceil(num/2)) * -1
