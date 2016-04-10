@@ -67,8 +67,9 @@ class Tree(object):
         if self is None:
             return 0
         else:
-            depth_size = max(Tree.depth(self.left), Tree.depth(self.right)) + 1
-            return depth_size
+            left_depth = self.left.depth() if self.left else 0
+            right_depth = self.right.depth() if self.right else 0
+            return max(left_depth, right_depth) + 1
 
     def balance(self):
         """Balance the tree."""
@@ -82,7 +83,6 @@ class Tree(object):
     def in_order(self):
         """Return generator to traverse nodes in order."""
         if self:
-            # import pdb; pdb.set_trace()
             if self.left:
                 for node in self.left.in_order():
                     yield node
@@ -135,11 +135,4 @@ bst.insert(4)
 bst.insert(5)
 bst.insert(2)
 bst.insert(9)
-print("***********************")
-# bst.contains(1)
-# bst.contains(5)
-# bst.contains(200)
-# bst.contains(45)
-
-# bst.size()
-bst.breadth_first()
+print(bst.in_order())
