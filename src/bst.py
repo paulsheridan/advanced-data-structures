@@ -149,16 +149,20 @@ class Tree(object):
                 cont.append(tree.right)
 
     def delete(self, data):
+        """Delete data point from BST."""
         import pdb; pdb.set_trace()
         target = self.contains(data)
-        if target is False:
+        if not target:
             return None
         if target.parent is True:
-            if self.left == target:
-                self.left = None
-            elif self.right == target:
-                self.right = None
-            target = None
+            if target.parent.left == target:
+                target.parent.left = None
+            elif target.parent.left == target:
+                target.parent.left = None
+            target.parent = None
+            for node in target.breadth_first():
+                if node != target.node:
+                    self.insert(node)
 
 
 bst = Tree(10)
@@ -169,4 +173,4 @@ bst.insert(4)
 bst.insert(5)
 bst.insert(2)
 bst.insert(9)
-# bst.delete(200)
+bst.delete(200)
