@@ -126,6 +126,10 @@ class Tree(object):
             if tree.right is not None:
                 cont.append(tree.right)
 
+    def delete(self, data):
+        to_remove = self.contains(data)
+        if self.contains(data) is False:
+            return None
 
 bst = Tree(10)
 bst.insert(11)
@@ -135,4 +139,4 @@ bst.insert(4)
 bst.insert(5)
 bst.insert(2)
 bst.insert(9)
-print(bst.in_order())
+
