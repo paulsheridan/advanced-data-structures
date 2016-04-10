@@ -4,7 +4,7 @@ from collections import deque
 class Tree(object):
     """Single class implementation of BST."""
 
-    def __init__(self, data):
+    def __init__(self, data, parent=None):
         """Initialize."""
         try:
             self.left = None
@@ -15,19 +15,41 @@ class Tree(object):
         except TypeError:
             return("Please plant a root ex. 'Tree(10)'")
 
+    @property
+    def left(self):
+        """Left child."""
+        return self._left
+
+    @left.setter
+    def left(self, node):
+        self._left = node
+        if node is not None:
+            node.parent = self
+
+    @property
+    def right(self):
+        """Right child."""
+        return self._right
+
+    @right.setter
+    def right(self, node):
+        self._right = node
+        if node is not None:
+            node.parent = self
+
     def insert(self, data):
         """Insert data into tree."""
         if self.data:
             if data < self.data:
                 if self.left is None:
-                    self.left = Tree(data)
-                    print(self.left.data)
+                    self.left = Tree(data=data, parent=self)
+                    print(self.left.parent.data)
                 else:
                     self.left.insert(data)
             elif data > self.data:
                 if self.right is None:
-                    self.right = Tree(data)
-                    print(self.right.data)
+                    self.right = Tree(data=data, parent=self)
+                    print(self.right.parent.data)
                 else:
                     self.right.insert(data)
         else:
@@ -127,9 +149,17 @@ class Tree(object):
                 cont.append(tree.right)
 
     def delete(self, data):
-        to_remove = self.contains(data)
-        if self.contains(data) is False:
+        import pdb; pdb.set_trace()
+        target = self.contains(data)
+        if target is False:
             return None
+        if target.parent is True:
+            if self.left == target:
+                self.left = None
+            elif self.right == target:
+                self.right = None
+            target = None
+
 
 bst = Tree(10)
 bst.insert(11)
@@ -139,4 +169,4 @@ bst.insert(4)
 bst.insert(5)
 bst.insert(2)
 bst.insert(9)
-
+# bst.delete(200)
