@@ -188,3 +188,17 @@ def test_traversal_post_single(num, test_tree):
     tree = Tree(num)
     result = [x for x in tree.post_order()]
     assert result == [num]
+
+
+@pytest.mark.parametrize('num', TOTAL)
+def test_add_delete_one(num, empty_tree):
+    empty_tree.insert(num)
+    empty_tree.delete(num)
+    assert not empty_tree.root
+
+
+@pytest.mark.parametrize('num', TOTAL)
+def test_add_delete_second(num, test_tree):
+    test_tree.insert(num)
+    test_tree.delete(num)
+    assert not test_tree.left and not test_tree.right
