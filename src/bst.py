@@ -4,7 +4,7 @@ from collections import deque
 class Tree(object):
     """Single class implementation of BST."""
 
-    def __init__(self, data):
+    def __init__(self, data, parent=None):
         """Initialize."""
         try:
             self.left = None
@@ -15,19 +15,39 @@ class Tree(object):
         except TypeError:
             return("Please plant a root ex. 'Tree(10)'")
 
+    @property
+    def left(self):
+        """Left child."""
+        return self._left
+
+    @left.setter
+    def left(self, node):
+        self._left = node
+        if node is not None:
+            node.parent = self
+
+    @property
+    def right(self):
+        """Right child."""
+        return self._right
+
+    @right.setter
+    def right(self, node):
+        self._right = node
+        if node is not None:
+            node.parent = self
+
     def insert(self, data):
         """Insert data into tree."""
         if self.data:
             if data < self.data:
                 if self.left is None:
-                    self.left = Tree(data)
-                    print(self.left.data)
+                    self.left = Tree(data=data, parent=self)
                 else:
                     self.left.insert(data)
             elif data > self.data:
                 if self.right is None:
-                    self.right = Tree(data)
-                    print(self.right.data)
+                    self.right = Tree(data=data, parent=self)
                 else:
                     self.right.insert(data)
         else:
@@ -126,6 +146,38 @@ class Tree(object):
             if tree.right is not None:
                 cont.append(tree.right)
 
+    def _search(self, data):
+        """Search for data in tree."""
+        if self.data == data:
+            return self
+        left_contains = None
+        right_contains = None
+        if self.left is not None:
+            left_contains = self.left._search(data)
+        if self.right is not None:
+            right_contains = self.right._search(data)
+        return left_contains or right_contains
+
+    def delete(self, data):
+        """Delete data point from BST."""
+        # import pdb; pdb.set_trace()
+        target = self._search(data)
+        # first checks if target exists, if not return None
+        if not target:
+            return None
+        # if there is a parent check through for target, if not,'cross' out
+        elif target.parent is not None:
+            if target.parent.left == target:
+                target.parent.left = None
+            elif target.parent.right == target:
+                target.parent.right = None
+            target.parent = None
+        # HERE: want to go through the tree (via generator) and 'recreate' tree
+        # need to check results
+            for data in Tree.in_order(self):
+                if data != target.data:
+                    self.insert(data)
+
 
 # bst = Tree(10)
 # bst.insert(11)
@@ -136,3 +188,4 @@ class Tree(object):
 # bst.insert(2)
 # bst.insert(9)
 # print(bst.in_order())
+# bst.delete(9)
