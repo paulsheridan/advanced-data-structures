@@ -4,16 +4,13 @@ from collections import deque
 class Tree(object):
     """Single class implementation of BST."""
 
-    def __init__(self, data, parent=None):
+    def __init__(self, data=None, parent=None):
         """Initialize."""
-        try:
-            self.left = None
-            self.right = None
-            self.parent = None
-            self.data = data
-            self.__size = 1
-        except TypeError:
-            return("Please plant a root ex. 'Tree(10)'")
+        self.left = None
+        self._right = None
+        self.parent = None
+        self.data = data
+        self.__size = 1
 
     @property
     def left(self):
@@ -39,19 +36,22 @@ class Tree(object):
 
     def insert(self, data):
         """Insert data into tree."""
-        if self.data:
-            if data < self.data:
-                if self.left is None:
-                    self.left = Tree(data=data, parent=self)
-                else:
-                    self.left.insert(data)
-            elif data > self.data:
-                if self.right is None:
-                    self.right = Tree(data=data, parent=self)
-                else:
-                    self.right.insert(data)
+        if not isinstance(data, int) or isinstance(data, float):
+            raise TypeError('Must be int or float')
         else:
-            self.data = data
+            if self.data:
+                if data < self.data:
+                    if self.left is None:
+                        self.left = Tree(data=data, parent=self)
+                    else:
+                        self.left.insert(data)
+                elif data > self.data:
+                    if self.right is None:
+                        self.right = Tree(data=data, parent=self)
+                    else:
+                        self.right.insert(data)
+            else:
+                self.data = data
         self.__size += 1
 
     def contains(self, data):
@@ -179,13 +179,13 @@ class Tree(object):
                     self.insert(data)
 
 
-# bst = Tree(10)
-# bst.insert(11)
+bst = Tree()
+bst.insert(11)
 # bst.insert(1)
 # bst.insert(3)
 # bst.insert(4)
 # bst.insert(5)
 # bst.insert(2)
 # bst.insert(9)
-# print(bst.in_order())
+# # print(bst.in_order())
 # bst.delete(9)
