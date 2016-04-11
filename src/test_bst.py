@@ -18,6 +18,13 @@ def test_tree():
 
 
 @pytest.fixture(scope='function')
+def empty_tree():
+    from bst import Tree
+    tree = Tree()
+    return tree
+
+
+@pytest.fixture(scope='function')
 def test_trav_tree():
     from bst import Tree
     tree = Tree(5)
@@ -84,13 +91,11 @@ def test_contains_false(even, odd):
     assert not tree.contains(odd)
 
 
-def test_null_tree_error():
-    from bst import Tree
-    with pytest.raises(TypeError):
-        Tree()
+def test_tree_value(empty_tree):
+    assert empty_tree
 
 
-def test_test_tree_value(test_tree):
+def test_empty_tree_value(test_tree):
     assert test_tree
 
 
