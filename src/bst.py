@@ -1,4 +1,5 @@
 from collections import deque
+import random
 
 
 class Tree(object):
@@ -162,30 +163,63 @@ class Tree(object):
         """Delete data point from BST."""
         # import pdb; pdb.set_trace()
         target = self._search(data)
-        # first checks if target exists, if not return None
         if not target:
             return None
-        # if there is a parent check through for target, if not,'cross' out
-        elif target.parent is not None:
+        # leaf
+        elif target.left is None and target.right is None:
             if target.parent.left == target:
                 target.parent.left = None
             elif target.parent.right == target:
                 target.parent.right = None
-            target.parent = None
-        # HERE: want to go through the tree (via generator) and 'recreate' tree
-        # need to check results
-            for data in Tree.in_order(self):
-                if data != target.data:
-                    self.insert(data)
 
+        elif target.left and not target.right:
+            target.parent.left = target.left
+            target.left = None
+        elif target.right and not target.left:
+            target.parent.right = target.right
+            target.right = None
+
+    def get_dot(self):
+        """return the tree with root 'self' as a dot graph for visualization"""
+        return "digraph G{\n%s}" % ("" if self.data is None else (
+            "\t%s;\n%s\n" % (
+                self.data,
+                "\n".join(self._get_dot())
+            )
+        ))
+
+    def _get_dot(self):
+        """recursively prepare a dot graph entry for this node."""
+        if self.left is not None:
+            yield "\t%s -> %s;" % (self.data, self.left.data)
+            for i in self.left._get_dot():
+                yield i
+        elif self.right is not None:
+            r = random.randint(0, 1e9)
+            yield "\tnull%s [shape=point];" % r
+            yield "\t%s -> null%s;" % (self.data, r)
+        if self.right is not None:
+            yield "\t%s -> %s;" % (self.data, self.right.data)
+            for i in self.right._get_dot():
+                yield i
+        elif self.left is not None:
+            r = random.randint(0, 1e9)
+            yield "\tnull%s [shape=point];" % r
+            yield "\t%s -> null%s;" % (self.data, r)
+            
 
 bst = Tree()
 bst.insert(11)
-# bst.insert(1)
-# bst.insert(3)
-# bst.insert(4)
-# bst.insert(5)
-# bst.insert(2)
-# bst.insert(9)
-# # print(bst.in_order())
+bst.insert(1)
+bst.insert(3)
+bst.insert(40)
+bst.insert(200)
+bst.insert(201)
+bst.insert(5)
+bst.insert(2)
+bst.insert(9)
+bst.delete(5)
+print(bst.get_dot())
+# print(bst.in_order())
 # bst.delete(9)
+
