@@ -7,7 +7,7 @@ class Tree(object):
 
     def __init__(self, data=None, parent=None):
         """Initialize."""
-        self.left = None
+        self._left = None
         self._right = None
         self.parent = None
         self.data = data
@@ -167,17 +167,27 @@ class Tree(object):
             return None
         # leaf
         elif target.left is None and target.right is None:
-            if target.parent.left == target:
+            if target.parent is None:
+                target.data = None
+            elif target.parent.left == target:
                 target.parent.left = None
             elif target.parent.right == target:
                 target.parent.right = None
 
+        # one-child
         elif target.left and not target.right:
             target.parent.left = target.left
             target.left = None
         elif target.right and not target.left:
             target.parent.right = target.right
             target.right = None
+
+        # two-child
+        elif target.left and target.right:
+            if target.parent is None:
+                target.right == target
+            if target.parent is not None:
+                pass
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
@@ -206,20 +216,20 @@ class Tree(object):
             r = random.randint(0, 1e9)
             yield "\tnull%s [shape=point];" % r
             yield "\t%s -> null%s;" % (self.data, r)
-            
+
 
 bst = Tree()
-bst.insert(11)
-bst.insert(1)
-bst.insert(3)
-bst.insert(40)
-bst.insert(200)
-bst.insert(201)
-bst.insert(5)
-bst.insert(2)
-bst.insert(9)
-bst.delete(5)
-print(bst.get_dot())
+# bst.insert(11)
+# bst.insert(1)
+# bst.insert(3)
+# bst.insert(40)
+# bst.insert(200)
+# bst.insert(201)
+# bst.insert(5)
+# bst.insert(2)
+# bst.insert(9)
+# bst.delete(11)
+# print(bst.get_dot())
 # print(bst.in_order())
 # bst.delete(9)
 
