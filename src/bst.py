@@ -43,13 +43,11 @@ class Tree(object):
             if data < self.data:
                 if self.left is None:
                     self.left = Tree(data=data, parent=self)
-                    print(self.left.parent.data)
                 else:
                     self.left.insert(data)
             elif data > self.data:
                 if self.right is None:
                     self.right = Tree(data=data, parent=self)
-                    print(self.right.parent.data)
                 else:
                     self.right.insert(data)
         else:
@@ -148,29 +146,6 @@ class Tree(object):
             if tree.right is not None:
                 cont.append(tree.right)
 
-    def contains(self, data):
-        """Check tree for data."""
-        try:
-            if self.data:
-                if data < self.data:
-                    if self.left.data and data == self.left.data:
-                        print("True")
-                        return True
-                    else:
-                        self.left.contains(data)
-                elif data > self.data:
-                    if self.right.data and data == self.right.data:
-                        print("True")
-                        return True
-                    else:
-                        self.right.contains(data)
-                elif data == self.data:
-                    print("True")
-                    return True
-        except AttributeError:
-            print("False")
-            return False
-
     def _search(self, data):
         """Search for data in tree."""
         if self.data == data:
@@ -185,27 +160,31 @@ class Tree(object):
 
     def delete(self, data):
         """Delete data point from BST."""
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         target = self._search(data)
+        # first checks if target exists, if not return None
         if not target:
             return None
+        # if there is a parent check through for target, if not,'cross' out
         elif target.parent is not None:
             if target.parent.left == target:
                 target.parent.left = None
             elif target.parent.right == target:
-                target.parent.left = None
+                target.parent.right = None
             target.parent = None
-            for data in target.breadth_first():
+        # HERE: want to go through the tree (via generator) and 'recreate' tree
+        # need to check results
+            for data in Tree.in_order(self):
                 if data != target.data:
                     self.insert(data)
 
 
-bst = Tree(10)
-bst.insert(11)
-bst.insert(1)
-bst.insert(3)
-bst.insert(4)
-bst.insert(5)
-bst.insert(2)
-bst.insert(9)
-bst.delete(9)
+# bst = Tree(10)
+# bst.insert(11)
+# bst.insert(1)
+# bst.insert(3)
+# bst.insert(4)
+# bst.insert(5)
+# bst.insert(2)
+# bst.insert(9)
+# bst.delete(9)
