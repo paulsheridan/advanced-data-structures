@@ -84,12 +84,6 @@ def test_contains_false(even, odd):
     assert not tree.contains(odd)
 
 
-def test_null_tree_error():
-    from bst import Tree
-    with pytest.raises(TypeError):
-        Tree()
-
-
 def test_test_tree_value(test_tree):
     assert test_tree
 
