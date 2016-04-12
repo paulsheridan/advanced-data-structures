@@ -194,7 +194,7 @@ def test_traversal_post_single(num, test_tree):
 def test_add_delete_one(num, empty_tree):
     empty_tree.insert(num)
     empty_tree.delete(num)
-    assert not empty_tree.root
+    assert not empty_tree.data
 
 
 @pytest.mark.parametrize('num', TOTAL)
