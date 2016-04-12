@@ -184,13 +184,17 @@ class Tree(object):
 
         # two-child
         elif target.left and target.right:
-            if target.parent is None:
-                target.right == target
             if target.parent is not None:
-                pass
+                child = target.right
+                while child.left:
+                    child = child.left
+                target.data = child.data
+                if child.right:
+                    child.right = child.parent.left
+                child.parent.left = None
 
     def get_dot(self):
-        """return the tree with root 'self' as a dot graph for visualization"""
+        """Return the tree with root'self' as a dot graph for visualization."""
         return "digraph G{\n%s}" % ("" if self.data is None else (
             "\t%s;\n%s\n" % (
                 self.data,
@@ -199,7 +203,7 @@ class Tree(object):
         ))
 
     def _get_dot(self):
-        """recursively prepare a dot graph entry for this node."""
+        """Recursively prepare a dot graph entry for this node."""
         if self.left is not None:
             yield "\t%s -> %s;" % (self.data, self.left.data)
             for i in self.left._get_dot():
@@ -219,17 +223,17 @@ class Tree(object):
 
 
 bst = Tree()
-# bst.insert(11)
-# bst.insert(1)
-# bst.insert(3)
-# bst.insert(40)
-# bst.insert(200)
-# bst.insert(201)
-# bst.insert(5)
-# bst.insert(2)
-# bst.insert(9)
-# bst.delete(11)
-# print(bst.get_dot())
+bst.insert(50)
+bst.insert(30)
+bst.insert(70)
+bst.insert(20)
+bst.insert(40)
+bst.insert(60)
+bst.insert(80)
+bst.insert(75)
+bst.insert(72)
+bst.insert(100)
+bst.insert(73)
+bst.delete(70)
+print(bst.get_dot())
 # print(bst.in_order())
-# bst.delete(9)
-
