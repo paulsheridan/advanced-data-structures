@@ -190,8 +190,10 @@ class Tree(object):
                     child = child.left
                 target.data = child.data
                 if child.right:
-                    child.right = child.parent.left
-                child.parent.left = None
+                    # print(child.right.data)
+                    child.parent.left = child.right
+                else:
+                    child.parent.left = None
 
     def get_dot(self):
         """Return the tree with root'self' as a dot graph for visualization."""
@@ -223,17 +225,9 @@ class Tree(object):
 
 
 bst = Tree()
-bst.insert(50)
-bst.insert(30)
-bst.insert(70)
-bst.insert(20)
-bst.insert(40)
-bst.insert(60)
-bst.insert(80)
-bst.insert(75)
-bst.insert(72)
-bst.insert(100)
-bst.insert(73)
+TEST_TREE_LIST = [50, 30, 70, 20, 40,
+                  60, 80, 75, 100,
+                  76, 71, 73, 72, 74]
+[bst.insert(item) for item in TEST_TREE_LIST]
 bst.delete(70)
 print(bst.get_dot())
-# print(bst.in_order())
