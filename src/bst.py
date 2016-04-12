@@ -61,25 +61,47 @@ class Tree(object):
         """move up the tree and balance branches that are too heavy"""
         if self.data:
             if self.balance() > 1:
-                self._rotate_right()
+                if self.left.balance() < 0 and self.left.depth() > 1:
+                    self.left._rotate_left()
+                    self._rotate_right()
+                else:
+                    self.rotate_right()
             elif self.balance() < -1:
-                self._rotate_left()
+                if self.right.balance() > 0 and self.right.depth() > 1:
+                    # import pdb; pdb.set_trace()
+                    self.right._rotate_right()
+                    self._rotate_left()
+                else:
+                    self._rotate_left()
         if self.parent:
             self.parent._crawl_tree()
 
     def _rotate_right(self):
+        # import pdb; pdb.set_trace()
         new_root = self.left
-        self.left = new_root.right
-        if self.parent:
-            new_root.parent = self.parent
+        if new_root.left:
+            self.left = new_root.left
+        elif new_root.right:
+            self.left = new_root.right
+        if self.parent and self.parent.left == self:
+            self.parent.left = new_root
+        elif self.parent and self.parent.right == self:
+            self.parent.right = new_root
+        else:
+            new_root.parent = None
         new_root.right = self
 
     def _rotate_left(self):
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         new_root = self.right
-        self.right = new_root.left
-        if self.parent:
-            new_root.parent = self.parent
+        if new_root.left:
+            self.right = new_root.left
+        elif new_root.right:
+            self.right = new_root.right
+        if self.parent and self.parent.right == self:
+            self.parent.right = new_root
+        elif self.parent and self.parent.left == self:
+            self.parent.left = new_root
         else:
             new_root.parent = None
         new_root.left = self
@@ -183,7 +205,6 @@ class Tree(object):
 
     def delete(self, data):
         """Delete data point from BST."""
-        # import pdb; pdb.set_trace()
         target = self._search(data)
         if not target:
             return None
@@ -253,16 +274,13 @@ class Tree(object):
             yield "\tnull%s [shape=point];" % r
             yield "\t%s -> null%s;" % (self.data, r)
 
-# from bst import Tree
-bst = Tree()
-TEST_TREE_LIST = [50, 30, 70, 20, 40, 60, 80, 75, 100, 76, 71, 73, 72, 74]
-[bst.insert(item) for item in TEST_TREE_LIST]
-print(bst.get_dot())
-bst.delete(70)
-print(bst.get_dot())
-print(bst.contains(73))
+# bst = Tree()
+# TEST_TREE_LIST = [50, 30, 70, 20, 40, 60, 80, 75, 100, 76, 71, 73, 72, 74]
+# [bst.insert(item) for item in TEST_TREE_LIST]
+# print(bst.get_dot())
 
-# SMALL_TEST_TREE = [70, 60, 80, 75, 100, 76]
-# smbst = Tree()
-# [smbst.insert(item) for item in SMALL_TEST_TREE]
-# print(smbst.balance())
+SMALL_TEST_TREE = [70, 60, 80, 75, 100, 76]
+smbst = Tree()
+[smbst.insert(item) for item in SMALL_TEST_TREE]
+print(smbst.balance())
+print(smbst.get_dot())
