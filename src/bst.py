@@ -57,26 +57,19 @@ class Tree(object):
 
     def contains(self, data):
         """Check tree for data."""
-        try:
-            if self.data:
-                if data < self.data:
-                    if self.left.data and data == self.left.data:
-                        print("True")
-                        return True
-                    else:
-                        self.left.contains(data)
-                elif data > self.data:
-                    if self.right.data and data == self.right.data:
-                        print("True")
-                        return True
-                    else:
-                        self.right.contains(data)
-                elif data == self.data:
-                    print("True")
-                    return True
-        except AttributeError:
-            print("False")
-            return False
+        # import pdb; pdb.set_trace()
+        if data == self.data:
+            return True
+        elif data < self.data:
+            if self.left:
+                return self.left.contains(data)
+            else:
+                return False
+        elif data > self.data:
+            if self.right:
+                return self.right.contains(data)
+            else:
+                return False
 
     def size(self):
         """Return size of tree."""
@@ -166,31 +159,39 @@ class Tree(object):
         if not target:
             return None
         # leaf
-        elif target.left is None and target.right is None:
+        if target.left is None and target.right is None:
             if target.parent is None:
                 target.data = None
             elif target.parent.left == target:
                 target.parent.left = None
             elif target.parent.right == target:
                 target.parent.right = None
-
         # one-child
         elif target.left and not target.right:
-            target.parent.left = target.left
+            if target == target.parent.right:
+                target.parent.right = target.left
+            else:
+                target.parent.left = target.left
             target.left = None
         elif target.right and not target.left:
-            target.parent.right = target.right
+            if target == target.parent.right:
+                target.parent.right = target.right
+            else:
+                target.parent.left = target.right
             target.right = None
-
         # two-child
         elif target.left and target.right:
-            if target.parent is not None:
-                child = target.right
-                while child.left:
-                    child = child.left
-                target.data = child.data
+            child = target.right
+            while child.left:
+                child = child.left
+            target.data = child.data
+            if child is child.parent.right:
                 if child.right:
-                    # print(child.right.data)
+                    child.parent.right = child.right
+                else:
+                    child.parent.right = None
+            else:
+                if child.right:
                     child.parent.left = child.right
                 else:
                     child.parent.left = None
@@ -223,11 +224,11 @@ class Tree(object):
             yield "\tnull%s [shape=point];" % r
             yield "\t%s -> null%s;" % (self.data, r)
 
-
+# from bst import Tree
 bst = Tree()
-TEST_TREE_LIST = [50, 30, 70, 20, 40,
-                  60, 80, 75, 100,
-                  76, 71, 73, 72, 74]
+TEST_TREE_LIST = [50, 30, 70, 20, 40, 60, 80, 75, 100, 76, 71, 73, 72, 74]
 [bst.insert(item) for item in TEST_TREE_LIST]
+print(bst.get_dot())
 bst.delete(70)
 print(bst.get_dot())
+print(bst.contains(73))

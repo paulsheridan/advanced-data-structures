@@ -1,5 +1,6 @@
 import pytest
 import math
+import random
 
 TOTAL = list(range(100))
 HALF = list(range(50))
@@ -8,6 +9,10 @@ ODD = TOTAL[1::2]
 LESSER = TOTAL[:52]
 GREATER = TOTAL[50:]
 TEST_LIST = [9, 3, 22, 7, 1, 55]
+
+TEST_TREE_LIST = [50, 30, 70, 20, 40,
+                  60, 80, 75, 100,
+                  76, 71, 73, 72, 74]
 
 
 @pytest.fixture(scope='function')
@@ -74,12 +79,10 @@ def insert_unbalanced_right(num):
     return tree
 
 
-@pytest.mark.parametrize('even', EVEN)
-def test_contains_true(even):
-    from bst import Tree
-    tree = Tree(4)
-    tree.insert(even)
-    assert tree.contains(even)
+@pytest.mark.parametrize('num', TOTAL)
+def test_contains_true(num, empty_tree):
+    empty_tree.insert(num)
+    assert empty_tree.contains(num)
 
 
 @pytest.mark.parametrize('odd', ODD)
@@ -202,3 +205,19 @@ def test_add_delete_second(num, test_tree):
     test_tree.insert(num)
     test_tree.delete(num)
     assert not test_tree.left and not test_tree.right
+
+
+@pytest.mark.parametrize('num', TEST_TREE_LIST)
+def test_delete_from_tree(num, empty_tree):
+    [empty_tree.insert(item) for item in TEST_TREE_LIST]
+    empty_tree.delete(num)
+    assert not empty_tree.contains(num)
+
+
+@pytest.mark.parametrize('num', TEST_TREE_LIST)
+def test_not_deleted_from_tree(num, empty_tree):
+    [empty_tree.insert(item) for item in TEST_TREE_LIST]
+    empty_tree.delete(num)
+    for item_two in TEST_TREE_LIST:
+        if item_two != num:
+            assert empty_tree.contains(item_two)
