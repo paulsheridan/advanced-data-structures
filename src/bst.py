@@ -44,16 +44,45 @@ class Tree(object):
                 if data < self.data:
                     if self.left is None:
                         self.left = Tree(data=data, parent=self)
+                        self._crawl_tree()
                     else:
                         self.left.insert(data)
                 elif data > self.data:
                     if self.right is None:
                         self.right = Tree(data=data, parent=self)
+                        self._crawl_tree()
                     else:
                         self.right.insert(data)
             else:
                 self.data = data
-        self.__size += 1
+                self.__size += 1
+
+    def _crawl_tree(self):
+        """move up the tree and balance branches that are too heavy"""
+        if self.data:
+            if self.balance() > 1:
+                self._rotate_right()
+            elif self.balance() < -1:
+                self._rotate_left()
+        if self.parent:
+            self.parent._crawl_tree()
+
+    def _rotate_right(self):
+        new_root = self.left
+        self.left = new_root.right
+        if self.parent:
+            new_root.parent = self.parent
+        new_root.right = self
+
+    def _rotate_left(self):
+        import pdb; pdb.set_trace()
+        new_root = self.right
+        self.right = new_root.left
+        if self.parent:
+            new_root.parent = self.parent
+        else:
+            new_root.parent = None
+        new_root.left = self
 
     def contains(self, data):
         """Check tree for data."""
@@ -232,3 +261,8 @@ print(bst.get_dot())
 bst.delete(70)
 print(bst.get_dot())
 print(bst.contains(73))
+
+# SMALL_TEST_TREE = [70, 60, 80, 75, 100, 76]
+# smbst = Tree()
+# [smbst.insert(item) for item in SMALL_TEST_TREE]
+# print(smbst.balance())
