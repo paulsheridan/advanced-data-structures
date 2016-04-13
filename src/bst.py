@@ -3,6 +3,14 @@ import random
 
 
 def insert(tree, val):
+    """
+    Due to forces beyond our control, it's necessary
+    to run this external function
+    to insert nodes into the tree.  Please rebind the
+    tree to the output of this function
+    passing in the tree and the value
+    you'd like to insert: tree = insert(tree, 7)
+    """
     tree._insert(val)
     return tree._find_root()
 
