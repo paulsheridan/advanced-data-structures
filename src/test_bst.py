@@ -107,7 +107,7 @@ def test_make_one_node_tree(test_tree):
 
 
 def test_enter_second_node(test_tree):
-    test_tree.insert(6)
+    test_tree = insert(test_tree, 6)
     assert test_tree.right.data == 6
 
 
@@ -124,12 +124,12 @@ def test_test_tree_size(test_tree):
 
 
 def test_first_entry_size(test_tree):
-    test_tree.insert(8)
+    test_tree = insert(test_tree, 8)
     assert test_tree.size() == 2
 
 
 def test_insert_first_child(test_tree):
-    test_tree.insert(10)
+    test_tree = insert(test_tree, 10)
     assert test_tree.right.data == 10
 
 
@@ -141,17 +141,17 @@ def test_even_balance(num):
 
 
 @pytest.mark.parametrize('num', HALF)
-def test_uneven_left(num):
+def test_self_balance_left_heavy(num):
     if num > 2 and num % 2 == 0:
         left_tree = insert_unbalanced_left(num)
-        assert left_tree.balance() == math.ceil(num/2)
+        assert left_tree.balance() < 2
 
 
 @pytest.mark.parametrize('num', HALF)
-def test_uneven_right(num):
+def test_self_balance_right_heavy(num):
     if num > 2 and num % 2 == 0:
         right_tree = insert_unbalanced_right(num)
-        assert right_tree.balance() == (math.ceil(num/2)) * -1
+        assert right_tree.balance() < 2
 
 
 def test_in_order(test_trav_tree):
@@ -195,28 +195,30 @@ def test_traversal_post_single(num, test_tree):
 
 @pytest.mark.parametrize('num', TOTAL)
 def test_add_delete_one(num, empty_tree):
-    empty_tree.insert(num)
+    empty_tree = insert(empty_tree, num)
     empty_tree.delete(num)
     assert not empty_tree.data
 
 
 @pytest.mark.parametrize('num', TOTAL)
-def test_add_delete_second(num, test_tree):
-    test_tree.insert(num)
-    test_tree.delete(num)
-    assert not test_tree.left and not test_tree.right
+def test_add_delete_second(num, empty_tree):
+    empty_tree = insert(empty_tree, num)
+    empty_tree.delete(num)
+    assert not empty_tree.left and not empty_tree.right
 
 
 @pytest.mark.parametrize('num', TEST_TREE_LIST)
 def test_delete_from_tree(num, empty_tree):
-    [empty_tree.insert(item) for item in TEST_TREE_LIST]
+    for item in TEST_TREE_LIST:
+        empty_tree = insert(empty_tree, item)
     empty_tree.delete(num)
     assert not empty_tree.contains(num)
 
 
 @pytest.mark.parametrize('num', TEST_TREE_LIST)
 def test_not_deleted_from_tree(num, empty_tree):
-    [empty_tree.insert(item) for item in TEST_TREE_LIST]
+    for item in TEST_TREE_LIST:
+        empty_tree = insert(empty_tree, item)
     empty_tree.delete(num)
     for item_two in TEST_TREE_LIST:
         if item_two != num:

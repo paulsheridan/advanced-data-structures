@@ -3,7 +3,7 @@ import random
 
 
 def insert(tree, val):
-    tree = tree._insert(val)
+    tree._insert(val)
     return tree._find_root()
 
 
@@ -57,14 +57,14 @@ class Tree(object):
                         self.__size += 1
                         self._crawl_tree()
                     else:
-                        self.left.insert(data)
+                        self.left._insert(data)
                 elif data > self.data:
                     if self.right is None:
                         self.right = Tree(data=data, parent=self)
                         self.__size += 1
                         self._crawl_tree()
                     else:
-                        self.right.insert(data)
+                        self.right._insert(data)
                 else:
                     raise TypeError('This value already exists')
             else:
@@ -78,7 +78,7 @@ class Tree(object):
                     self.left._rotate_left()
                     self._rotate_right()
                 else:
-                    self.rotate_right()
+                    self._rotate_right()
             elif self.balance() < -1:
                 if self.right.balance() > 0 and self.right.depth() > 1:
                     self.right._rotate_right()
@@ -152,8 +152,11 @@ class Tree(object):
         if self is None:
             return 0
         else:
-            balance_left = Tree.depth(self.left)
-            balance_right = Tree.depth(self.right)
+            balance_left = balance_right = 0
+            if self.left:
+                balance_left = Tree.depth(self.left)
+            if self.right:
+                balance_right = Tree.depth(self.right)
             return balance_left - balance_right
 
     def in_order(self):
