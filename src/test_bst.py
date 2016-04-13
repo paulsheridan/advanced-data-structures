@@ -1,6 +1,6 @@
 import pytest
 import math
-import random
+from bst import insert
 
 TOTAL = list(range(100))
 HALF = list(range(50))
@@ -34,8 +34,8 @@ def test_trav_tree():
     from bst import Tree
     tree = Tree(5)
     for item in TEST_LIST:
-        tree.insert(item)
-    return tree
+        new_tree = insert(tree, item)
+    return new_tree
 
 
 def insert_balanced(num):
@@ -45,8 +45,8 @@ def insert_balanced(num):
     while num_of_runs > 0:
         left_num = LESSER[num_of_runs]
         right_num = GREATER[num_of_runs]
-        tree.insert(left_num)
-        tree.insert(right_num)
+        tree = insert(tree, left_num)
+        tree = insert(tree, right_num)
         num_of_runs -= 1
     return tree
 
@@ -57,10 +57,10 @@ def insert_unbalanced_left(num):
     tree = Tree(50)
     while num_of_runs > 0:
         left_num = LESSER[num_of_runs]
-        tree.insert(left_num)
+        tree = insert(tree, left_num)
         if num_of_runs % 2 == 0:
             right_num = GREATER[num_of_runs]
-            tree.insert(right_num)
+            insert(tree, right_num)
         num_of_runs -= 1
     return tree
 
@@ -71,17 +71,17 @@ def insert_unbalanced_right(num):
     tree = Tree(50)
     while num_of_runs > 0:
         right_num = GREATER[num_of_runs]
-        tree.insert(right_num)
+        tree = insert(tree, right_num)
         if num_of_runs % 2 == 0:
             left_num = LESSER[num_of_runs]
-            tree.insert(left_num)
+            tree = insert(tree, left_num)
         num_of_runs -= 1
     return tree
 
 
 @pytest.mark.parametrize('num', TOTAL)
 def test_contains_true(num, empty_tree):
-    empty_tree.insert(num)
+    empty_tree = insert(empty_tree, num)
     assert empty_tree.contains(num)
 
 
@@ -90,7 +90,7 @@ def test_contains_true(num, empty_tree):
 def test_contains_false(even, odd):
     from bst import Tree
     tree = Tree(216)
-    tree.insert(even)
+    tree = insert(tree, even)
     assert not tree.contains(odd)
 
 

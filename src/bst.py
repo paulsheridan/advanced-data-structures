@@ -2,6 +2,11 @@ from collections import deque
 import random
 
 
+def insert(tree, val):
+    tree = tree._insert(val)
+    return tree._find_root()
+
+
 class Tree(object):
     """Single class implementation of BST."""
 
@@ -35,7 +40,12 @@ class Tree(object):
         if node is not None:
             node.parent = self
 
-    def insert(self, data):
+    def _find_root(self):
+        if self.parent:
+            self._find_root(self.parent)
+        return self
+
+    def _insert(self, data):
         """Insert data into tree."""
         if not isinstance(data, int) or isinstance(data, float):
             raise TypeError('Must be int or float')
@@ -210,8 +220,8 @@ class Tree(object):
         if not target:
             return None
         # leaf
-        if target.left is None and target.right is None:
-            if target.parent is None:
+        if not target.left and not target.right:
+            if not target.parent:
                 target.data = None
             elif target.parent.left == target:
                 target.parent.left = None
@@ -280,8 +290,8 @@ class Tree(object):
 # [bst.insert(item) for item in TEST_TREE_LIST]
 # print(bst.get_dot())
 
-SMALL_TEST_TREE = [70, 60, 80, 75, 100, 76]
-smbst = Tree()
-[smbst.insert(item) for item in SMALL_TEST_TREE]
-print(smbst.balance())
-print(smbst.get_dot())
+# SMALL_TEST_TREE = [70, 60, 80, 75, 100, 76]
+# smbst = Tree()
+# [smbst.insert(item) for item in SMALL_TEST_TREE]
+# print(smbst.balance())
+# print(smbst.get_dot())
