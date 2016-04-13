@@ -10,10 +10,6 @@ LESSER = TOTAL[:52]
 GREATER = TOTAL[50:]
 TEST_LIST = [9, 3, 22, 7, 1, 55]
 
-TEST_TREE_LIST = [50, 30, 70, 20, 40,
-                  60, 80, 75, 100,
-                  76, 71, 73, 72, 74]
-
 
 @pytest.fixture(scope='function')
 def test_tree():
@@ -208,18 +204,19 @@ def test_add_delete_second(num, empty_tree):
 
 
 def test_delete_from_tree(empty_tree):
-    for item in TEST_TREE_LIST:
+    for item in TEST_LIST:
+        print(item)
         empty_tree = insert(empty_tree, item)
-    deleted = random.choice(TEST_TREE_LIST)
+    deleted = random.choice(TEST_LIST)
     empty_tree.delete(deleted)
     assert not empty_tree.contains(deleted)
 
 
 def test_not_deleted_from_tree(empty_tree):
-    for item in TEST_TREE_LIST:
+    for item in TEST_LIST:
         empty_tree = insert(empty_tree, item)
-    deleted = random.choice(TEST_TREE_LIST)
+    deleted = random.choice(TEST_LIST)
     empty_tree.delete(deleted)
-    for item_two in TEST_TREE_LIST:
+    for item_two in TEST_LIST:
         if item_two != deleted:
             assert empty_tree.contains(item_two)
