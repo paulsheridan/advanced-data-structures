@@ -1,5 +1,5 @@
 import pytest
-import math
+import random
 from bst import insert
 
 TOTAL = list(range(100))
@@ -207,19 +207,19 @@ def test_add_delete_second(num, empty_tree):
     assert not empty_tree.left and not empty_tree.right
 
 
-@pytest.mark.parametrize('num', TEST_TREE_LIST)
-def test_delete_from_tree(num, empty_tree):
+def test_delete_from_tree(empty_tree):
     for item in TEST_TREE_LIST:
         empty_tree = insert(empty_tree, item)
-    empty_tree.delete(num)
-    assert not empty_tree.contains(num)
+    deleted = random.choice(TEST_TREE_LIST)
+    empty_tree.delete(deleted)
+    assert not empty_tree.contains(deleted)
 
 
-@pytest.mark.parametrize('num', TEST_TREE_LIST)
-def test_not_deleted_from_tree(num, empty_tree):
+def test_not_deleted_from_tree(empty_tree):
     for item in TEST_TREE_LIST:
         empty_tree = insert(empty_tree, item)
-    empty_tree.delete(num)
+    deleted = random.choice(TEST_TREE_LIST)
+    empty_tree.delete(deleted)
     for item_two in TEST_TREE_LIST:
-        if item_two != num:
+        if item_two != deleted:
             assert empty_tree.contains(item_two)
