@@ -44,32 +44,32 @@ class Tree(object):
                 if data < self.data:
                     if self.left is None:
                         self.left = Tree(data=data, parent=self)
+                        self.__size += 1
                         self._crawl_tree()
                     else:
                         self.left.insert(data)
                 elif data > self.data:
                     if self.right is None:
                         self.right = Tree(data=data, parent=self)
+                        self.__size += 1
                         self._crawl_tree()
                     else:
                         self.right.insert(data)
+                else:
+                    raise TypeError('This value already exists')
             else:
                 self.data = data
-                self.__size += 1
 
     def _crawl_tree(self):
         """move up the tree and balance branches that are too heavy"""
         if self.data:
             if self.balance() > 1:
-                print('pre-right', smbst.get_dot())
-                # import pdb; pdb.set_trace()
                 if self.left.balance() < 0 and self.left.depth() > 1:
                     self.left._rotate_left()
                     self._rotate_right()
                 else:
                     self.rotate_right()
             elif self.balance() < -1:
-                # import pdb; pdb.set_trace()
                 if self.right.balance() > 0 and self.right.depth() > 1:
                     self.right._rotate_right()
                     self._rotate_left()
@@ -79,7 +79,6 @@ class Tree(object):
             self.parent._crawl_tree()
 
     def _rotate_right(self):
-        # import pdb; pdb.set_trace()
         new_root = self.left
         if self.parent and self.parent.left == self:
             self.parent.left = new_root
@@ -94,7 +93,6 @@ class Tree(object):
         new_root.right = self
 
     def _rotate_left(self):
-        # import pdb; pdb.set_trace()
         new_root = self.right
         if self.parent and self.parent.right == self:
             self.parent.right = new_root
@@ -110,7 +108,6 @@ class Tree(object):
 
     def contains(self, data):
         """Check tree for data."""
-        # import pdb; pdb.set_trace()
         if data == self.data:
             return True
         elif data < self.data:
@@ -126,8 +123,10 @@ class Tree(object):
 
     def size(self):
         """Return size of tree."""
-        print(self.__size)
-        return self.__size
+        if self.data:
+            return self.__size
+        else:
+            return 0
 
     def depth(self):
         """Return depth of the tree."""
@@ -276,13 +275,13 @@ class Tree(object):
             yield "\tnull%s [shape=point];" % r
             yield "\t%s -> null%s;" % (self.data, r)
 
-bst = Tree()
-TEST_TREE_LIST = [50, 30, 70, 20, 40, 60, 80, 75, 100, 76, 71, 73, 72, 74]
-[bst.insert(item) for item in TEST_TREE_LIST]
-print(bst.get_dot())
+# bst = Tree()
+# TEST_TREE_LIST = [50, 30, 70, 20, 40, 60, 80, 75, 100, 76, 71, 73, 72, 74]
+# [bst.insert(item) for item in TEST_TREE_LIST]
+# print(bst.get_dot())
 
-# SMALL_TEST_TREE = [70, 60, 80, 75, 100, 76]
-# smbst = Tree()
-# [smbst.insert(item) for item in SMALL_TEST_TREE]
-# print(smbst.balance())
-# print(smbst.get_dot())
+SMALL_TEST_TREE = [70, 60, 80, 75, 100, 76]
+smbst = Tree()
+[smbst.insert(item) for item in SMALL_TEST_TREE]
+print(smbst.balance())
+print(smbst.get_dot())
