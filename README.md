@@ -1,5 +1,5 @@
 # advanced-data-structures
-[![Build Status](https://travis-ci.org/paulsheridan/advanced-data-structures.svg?branch=master)](https://travis-ci.org/paulsheridan/advanced-data-structures)
+[![Build Status](https://travis-ci.org/paulsheridan/advanced-data-structures.svg?branch=hashtable)](https://travis-ci.org/paulsheridan/advanced-data-structures)
 
 A new data structures repo, brimming with some higher-level data structures.
 
