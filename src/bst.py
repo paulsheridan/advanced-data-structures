@@ -2,19 +2,6 @@ from collections import deque
 import random
 
 
-def insert(tree, val):
-    """
-    Due to forces beyond our control, it's necessary
-    to run this external function
-    to insert nodes into the tree.  Please rebind the
-    tree to the output of this function
-    passing in the tree and the value
-    you'd like to insert: tree = insert(tree, 7)
-    """
-    tree._insert(val)
-    return tree._find_root()
-
-
 class Tree(object):
     """Single class implementation of BST."""
 
@@ -48,12 +35,7 @@ class Tree(object):
         if node is not None:
             node.parent = self
 
-    def _find_root(self):
-        if self.parent:
-            self._find_root(self.parent)
-        return self
-
-    def _insert(self, data):
+    def insert(self, data):
         """Insert data into tree."""
         if not isinstance(data, int) or isinstance(data, float):
             raise TypeError('Must be int or float')
@@ -65,14 +47,14 @@ class Tree(object):
                         self.__size += 1
                         self._crawl_tree()
                     else:
-                        self.left._insert(data)
+                        self.left.insert(data)
                 elif data > self.data:
                     if self.right is None:
                         self.right = Tree(data=data, parent=self)
                         self.__size += 1
                         self._crawl_tree()
                     else:
-                        self.right._insert(data)
+                        self.right.insert(data)
                 else:
                     raise TypeError('This value already exists')
             else:
@@ -97,32 +79,42 @@ class Tree(object):
             self.parent._crawl_tree()
 
     def _rotate_right(self):
+        """Rotate right from parent node."""
+        print(self.data)
         new_root = self.left
-        if self.parent and self.parent.left == self:
-            self.parent.left = new_root
-        elif self.parent and self.parent.right == self:
-            self.parent.right = new_root
-        else:
-            new_root.parent = None
+        new_root.data, self.data = self.data, new_root.data
+        if new_root.left:
+            self.left = new_root.left
+            new_root.left = None
         if new_root.right:
-            self.left = new_root.right
-        else:
-            self.left = None
-        new_root.right = self
+            new_root.left = new_root.right
+            new_root.right = None
+        if self.right:
+            new_root.right = self.right
+            self.right = None
+        self.right = new_root
+        if self.left == new_root.left:
+            new_root.left = None
 
     def _rotate_left(self):
+        """Rotate left from parent node."""
+        print(self.data)
         new_root = self.right
-        if self.parent and self.parent.right == self:
-            self.parent.right = new_root
-        elif self.parent and self.parent.left == self:
-            self.parent.left = new_root
-        else:
-            new_root.parent = None
+        new_root.data, self.data = self.data, new_root.data
+        if new_root.right:
+            self.right = new_root.right
+            new_root.right = None
         if new_root.left:
-            self.right = new_root.left
+            new_root.right = new_root.left
+            new_root.left = None
         else:
-            self.right = None
-        new_root.left = self
+            new_root.right = None
+        if self.left:
+            new_root.left = self.left
+            self.left = None
+        if self.right == new_root.right:
+            new_root.right = None
+        self.left = new_root
 
     def contains(self, data):
         """Check tree for data."""
@@ -300,9 +292,18 @@ class Tree(object):
 # TEST_TREE_LIST = [50, 30, 70, 20, 40, 60, 80, 75, 100, 76, 71, 73, 72, 74]
 # [bst.insert(item) for item in TEST_TREE_LIST]
 # print(bst.get_dot())
-
-# SMALL_TEST_TREE = [70, 60, 80, 75, 100, 76]
+#
+# SMALL_TEST_TREE = [70, 60, 80, 55, 65, 68]
+# # SMALL_TEST_TREE = [70, 60, 80, 75, 100, 76]
 # smbst = Tree()
-# [smbst.insert(item) for item in SMALL_TEST_TREE]
-# print(smbst.balance())
+# for item in SMALL_TEST_TREE:
+#     print(smbst.get_dot())
+#     smbst.insert(item)
+# print(smbst.get_dot())
+
+# SMALLER_TEST_TREE = [80, 70, 100]
+# smbst = Tree()
+# for item in SMALLER_TEST_TREE:
+#     smbst.insert(item)
+# smbst._rotate_right()
 # print(smbst.get_dot())

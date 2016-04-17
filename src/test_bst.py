@@ -1,6 +1,5 @@
 import pytest
 import random
-from bst import insert
 
 TOTAL = list(range(100))
 HALF = list(range(50))
@@ -30,8 +29,8 @@ def test_trav_tree():
     from bst import Tree
     tree = Tree(5)
     for item in TEST_LIST:
-        new_tree = insert(tree, item)
-    return new_tree
+        tree.insert(item)
+    return tree
 
 
 def insert_balanced(num):
@@ -41,8 +40,8 @@ def insert_balanced(num):
     while num_of_runs > 0:
         left_num = LESSER[num_of_runs]
         right_num = GREATER[num_of_runs]
-        tree = insert(tree, left_num)
-        tree = insert(tree, right_num)
+        tree.insert(left_num)
+        tree.insert(right_num)
         num_of_runs -= 1
     return tree
 
@@ -53,10 +52,10 @@ def insert_unbalanced_left(num):
     tree = Tree(50)
     while num_of_runs > 0:
         left_num = LESSER[num_of_runs]
-        tree = insert(tree, left_num)
+        tree.insert(left_num)
         if num_of_runs % 2 == 0:
             right_num = GREATER[num_of_runs]
-            insert(tree, right_num)
+            tree.insert(right_num)
         num_of_runs -= 1
     return tree
 
@@ -67,17 +66,17 @@ def insert_unbalanced_right(num):
     tree = Tree(50)
     while num_of_runs > 0:
         right_num = GREATER[num_of_runs]
-        tree = insert(tree, right_num)
+        tree.insert(right_num)
         if num_of_runs % 2 == 0:
             left_num = LESSER[num_of_runs]
-            tree = insert(tree, left_num)
+            tree.insert(left_num)
         num_of_runs -= 1
     return tree
 
 
 @pytest.mark.parametrize('num', TOTAL)
 def test_contains_true(num, empty_tree):
-    empty_tree = insert(empty_tree, num)
+    empty_tree.insert(num)
     assert empty_tree.contains(num)
 
 
@@ -86,7 +85,7 @@ def test_contains_true(num, empty_tree):
 def test_contains_false(even, odd):
     from bst import Tree
     tree = Tree(216)
-    tree = insert(tree, even)
+    tree.insert(even)
     assert not tree.contains(odd)
 
 
@@ -103,7 +102,7 @@ def test_make_one_node_tree(test_tree):
 
 
 def test_enter_second_node(test_tree):
-    test_tree = insert(test_tree, 6)
+    test_tree.insert(6)
     assert test_tree.right.data == 6
 
 
@@ -120,12 +119,12 @@ def test_test_tree_size(test_tree):
 
 
 def test_first_entry_size(test_tree):
-    test_tree = insert(test_tree, 8)
+    test_tree.insert(8)
     assert test_tree.size() == 2
 
 
 def test_insert_first_child(test_tree):
-    test_tree = insert(test_tree, 10)
+    test_tree.insert(10)
     assert test_tree.right.data == 10
 
 
@@ -191,14 +190,14 @@ def test_traversal_post_single(num, test_tree):
 
 @pytest.mark.parametrize('num', TOTAL)
 def test_add_delete_one(num, empty_tree):
-    empty_tree = insert(empty_tree, num)
+    empty_tree.insert(num)
     empty_tree.delete(num)
     assert not empty_tree.data
 
 
 @pytest.mark.parametrize('num', TOTAL)
 def test_add_delete_second(num, empty_tree):
-    empty_tree = insert(empty_tree, num)
+    empty_tree.insert(num)
     empty_tree.delete(num)
     assert not empty_tree.left and not empty_tree.right
 
@@ -206,7 +205,7 @@ def test_add_delete_second(num, empty_tree):
 def test_delete_from_tree(empty_tree):
     for item in TEST_LIST:
         print(item)
-        empty_tree = insert(empty_tree, item)
+        empty_tree.insert(item)
     deleted = random.choice(TEST_LIST)
     empty_tree.delete(deleted)
     assert not empty_tree.contains(deleted)
@@ -214,7 +213,7 @@ def test_delete_from_tree(empty_tree):
 
 def test_not_deleted_from_tree(empty_tree):
     for item in TEST_LIST:
-        empty_tree = insert(empty_tree, item)
+        empty_tree.insert(item)
     deleted = random.choice(TEST_LIST)
     empty_tree.delete(deleted)
     for item_two in TEST_LIST:
