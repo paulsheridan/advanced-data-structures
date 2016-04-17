@@ -284,10 +284,3 @@ class Tree(object):
             r = random.randint(0, 1e9)
             yield "\tnull%s [shape=point];" % r
             yield "\t%s -> null%s;" % (self.data, r)
-
-bst = Tree()
-mylist = list(range(100))
-random.shuffle(mylist)
-[bst.insert(x) for x in mylist]
-print(bst.size())
-# print(bst.get_dot())
