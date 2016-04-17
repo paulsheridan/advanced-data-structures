@@ -11,7 +11,7 @@ class Tree(object):
         self._right = None
         self.parent = None
         self.data = data
-        self.__size = 1
+        self._size = 1
 
     @property
     def left(self):
@@ -41,17 +41,16 @@ class Tree(object):
             raise TypeError('Must be int or float')
         else:
             if self.data:
+                self._size += 1
                 if data < self.data:
                     if self.left is None:
                         self.left = Tree(data=data, parent=self)
-                        self.__size += 1
                         self._crawl_tree()
                     else:
                         self.left.insert(data)
                 elif data > self.data:
                     if self.right is None:
                         self.right = Tree(data=data, parent=self)
-                        self.__size += 1
                         self._crawl_tree()
                     else:
                         self.right.insert(data)
@@ -80,7 +79,6 @@ class Tree(object):
 
     def _rotate_right(self):
         """Rotate right from parent node."""
-        print(self.data)
         new_root = self.left
         new_root.data, self.data = self.data, new_root.data
         if new_root.left:
@@ -98,7 +96,6 @@ class Tree(object):
 
     def _rotate_left(self):
         """Rotate left from parent node."""
-        print(self.data)
         new_root = self.right
         new_root.data, self.data = self.data, new_root.data
         if new_root.right:
@@ -134,7 +131,7 @@ class Tree(object):
     def size(self):
         """Return size of tree."""
         if self.data:
-            return self.__size
+            return self._size
         else:
             return 0
 
@@ -288,22 +285,9 @@ class Tree(object):
             yield "\tnull%s [shape=point];" % r
             yield "\t%s -> null%s;" % (self.data, r)
 
-# bst = Tree()
-# TEST_TREE_LIST = [50, 30, 70, 20, 40, 60, 80, 75, 100, 76, 71, 73, 72, 74]
-# [bst.insert(item) for item in TEST_TREE_LIST]
+bst = Tree()
+mylist = list(range(100))
+random.shuffle(mylist)
+[bst.insert(x) for x in mylist]
+print(bst.size())
 # print(bst.get_dot())
-#
-# SMALL_TEST_TREE = [70, 60, 80, 55, 65, 68]
-# # SMALL_TEST_TREE = [70, 60, 80, 75, 100, 76]
-# smbst = Tree()
-# for item in SMALL_TEST_TREE:
-#     print(smbst.get_dot())
-#     smbst.insert(item)
-# print(smbst.get_dot())
-
-# SMALLER_TEST_TREE = [80, 70, 100]
-# smbst = Tree()
-# for item in SMALLER_TEST_TREE:
-#     smbst.insert(item)
-# smbst._rotate_right()
-# print(smbst.get_dot())
