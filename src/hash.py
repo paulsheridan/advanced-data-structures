@@ -1,11 +1,3 @@
-# get(key) return value at key
-# set(key,val) store given value at given key
-# _hash(key) hash the key provided
-# keys may only be strings
-# use buckets to store values that share a hash
-# dont use dicts
-
-
 class Hashtable(object):
     """Implement a hashtable."""
 
@@ -16,12 +8,21 @@ class Hashtable(object):
 
     def set(self, key, value):
         """Store value at given key."""
-        hashed_key = self._hash(key)
-        self.table[hashed_key].append((key, value))
-
+        if isinstance(key, str):
+            hashed_key = self._hash(key)
+            self.table[hashed_key].append((key, value))
+        else:
+            raise KeyError("Hey, Idiort. Inpork STring 4 key plz")
 
     def get(self, key):
         """Return value stored at key."""
+        if isinstance(key, str):
+            hashed_key = self._hash(key)
+            for item in self.table[hashed_key]:
+                if item[0] == key:
+                    return item[1]
+        else:
+            raise KeyError("Hey, Idiort. Inpork STring 4 key plz")
         pass
 
     def _hash(self, key):
@@ -46,8 +47,3 @@ class Hashtable(object):
             byte = bits[bit * 8:(bit + 1) * 8]
             letters.append(chr(int(''.join([str(bit) for bit in byte]), 2)))
         return ''.join(letters)
-
-
-h = Hashtable()
-h.set("First", "Awwwww yeeeaaa")
-print(h.table)
