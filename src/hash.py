@@ -14,8 +14,7 @@ class Hashtable(object):
         self.fixed_size = fixed_size
 
     def _hash(self, key):
-        # value at key % 10
-        # import pdb; pdb.set_trace()
+        """Hash key and determine index."""
         int_key = self._str_to_bits(key)
         return int_key % self.fixed_size
 
