@@ -9,14 +9,25 @@
 class Hashtable(object):
     """Implement a hashtable."""
 
-    def __init__(self, fixed_size=11):
+    def __init__(self, size=11):
         """Initialize table."""
-        self.fixed_size = fixed_size
+        self.size = size
+        self.table = [[] for x in range(self.size)]
+
+    def set(self, key, value):
+        """Store value at given key."""
+        hashed_key = self._hash(key)
+        self.table[hashed_key].append((key, value))
+
+
+    def get(self, key):
+        """Return value stored at key."""
+        pass
 
     def _hash(self, key):
         """Hash key and determine index."""
         int_key = self._str_to_bits(key)
-        return int_key % self.fixed_size
+        return int_key % self.size
 
     def _str_to_bits(self, string):
         """Convert unicode to integers."""
@@ -38,4 +49,5 @@ class Hashtable(object):
 
 
 h = Hashtable()
-print(h._hash("Hello"))
+h.set("First", "Awwwww yeeeaaa")
+print(h.table)
