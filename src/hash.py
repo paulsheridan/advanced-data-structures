@@ -41,10 +41,10 @@ class Hashtable(object):
         result = sum(result)
         return result
 
-    def _bits_to_str(self, bits):
-        """Convert bits to strings."""
-        letters = []
-        for bit in range(len(bits) / 8):
-            byte = bits[bit * 8:(bit + 1) * 8]
-            letters.append(chr(int(''.join([str(bit) for bit in byte]), 2)))
-        return ''.join(letters)
+    # def _bits_to_str(self, bits):
+    #     """Convert bits to strings."""
+    #     letters = []
+    #     for bit in range(len(bits) / 8):
+    #         byte = bits[bit * 8:(bit + 1) * 8]
+    #         letters.append(chr(int(''.join([str(bit) for bit in byte]), 2)))
+    #     return ''.join(letters)
