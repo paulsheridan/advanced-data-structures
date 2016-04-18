@@ -15,6 +15,7 @@ class Hashtable(object):
 
     def _hash(self, key):
         # value at key % 10
+        # import pdb; pdb.set_trace()
         int_key = self._str_to_bits(key)
         return int_key % self.fixed_size
 
@@ -25,6 +26,7 @@ class Hashtable(object):
             bits = bin(ord(letter))[2:]
             bits = '00000000'[len(bits):] + bits
             result.extend([int(bit) for bit in bits])
+        result = sum(result)
         return result
 
     def _bits_to_str(self, bits):
@@ -34,3 +36,7 @@ class Hashtable(object):
             byte = bits[bit * 8:(bit + 1) * 8]
             letters.append(chr(int(''.join([str(bit) for bit in byte]), 2)))
         return ''.join(letters)
+
+
+h = Hashtable()
+print(h._hash("Hello"))
