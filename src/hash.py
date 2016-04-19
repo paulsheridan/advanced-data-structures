@@ -13,7 +13,7 @@ class Hashtable(object):
             hashed_key = self._hash(key)
             self.table[hashed_key].append((key, value))
         else:
-            raise KeyError("Hey, Idiort. Inpork STring 4 key plz")
+            raise KeyError("Please input a string as your key")
 
     def get(self, key):
         """Return value stored at key."""
@@ -23,7 +23,7 @@ class Hashtable(object):
                 if item[0] == key:
                     return item[1]
         else:
-            raise KeyError("Hey, Idiort. Inpork STring 4 key plz")
+            raise KeyError("Please input a string as your key")
         pass
 
     def _hash(self, key):

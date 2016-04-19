@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import pytest
-import os
 
 
 FILE_PATH = '/usr/share/dict/words'
@@ -43,11 +42,12 @@ def test_full_hashtable():
 
 def test_key_error(new_hash):
     """Test key error."""
+    cat = 2 + 6
     with pytest.raises(KeyError):
         assert new_hash.set(123, "potato")
         assert new_hash.set(cat, "dog")
-        assert new_hash.get(456, "seven, eight, nine")
-        assert new_hash.get(error, "so many")
+        assert new_hash.get(4.56, "seven, eight, nine")
+        assert new_hash.get(True, "so many")
 
 
 def test_hash(new_hash):
