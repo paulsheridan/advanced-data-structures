@@ -17,7 +17,23 @@ def mergesort(in_list):
         right = in_list[mid:]
         mergesort(left)
         mergesort(right)
+        return(merge(left, right))
 
+
+def merge(left, right):
+    new = []
+    while len(left) > 0 and len(right) > 0:
+        if left[0] < right[0]:
+            new.append(left.pop(0))
+        elif right[0] < left[0]:
+            new.append(right.pop(0))
+        else:
+            new.extend(right.pop(0), left.pop(0))
+    if len(left) > 0:
+        new.extend(left)
+    elif len(right) > 0:
+        new.extend(right)
+    return new
 
 
 def wrapper(func, *args, **kwargs):
