@@ -10,6 +10,16 @@ def insertionsort(in_list):
     return in_list
 
 
+def mergesort(in_list):
+    if len(in_list) > 1:
+        mid = len(in_list)//2
+        left = in_list[:mid]
+        right = in_list[mid:]
+        mergesort(left)
+        mergesort(right)
+
+
+
 def wrapper(func, *args, **kwargs):
     def wrapped():
         return func(*args, **kwargs)
