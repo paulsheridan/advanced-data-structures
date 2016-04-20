@@ -45,18 +45,34 @@ def wrapper(func, *args, **kwargs):
     return wrapped
 
 
-# if __name__ == '__main__':
-#     import timeit
-#     LIST_ONE = [1, 2, 3, 4]
-#     LIST_TWO = [random.randint(0, 1000000) for i in range(10000)]
-#     print("Insertion sort")
-#     print("Compares each item in the list to its neighbor.")
-#     print("It's stable and most efficient on small lists.")
-#     print("Input: [1, 2]")
-#     wrapped = wrapper(insertionsort, LIST_ONE)
-#     print('Runs: 500')
-#     print('Average time: ', timeit.timeit(wrapped, number=500))
-#     print("Input: [random.randint(0, 1000000) for i in range(10000)]")
-#     print('Runs: 500')
-#     wrapped = wrapper(insertionsort, LIST_TWO)
-#     print('Average time: ', timeit.timeit(wrapped, number=500))
+if __name__ == '__main__':
+    import timeit
+    LIST_ONE = [2, 1, 4, 3]
+    LIST_TWO = [random.randint(0, 1000000) for i in range(10000)]
+    print("Merge Sort")
+    print("Divides unsorted list into n sublists,\
+ and repeatedly sorts and merges sublists into one sorted list.")
+    print("It's stable and most efficient on small lists.")
+    print("Input: [2, 1, 4, 3]")
+    wrapped = wrapper(mergesort, LIST_ONE)
+    print('Runs: 500')
+    print('Average time: ', timeit.timeit(wrapped, number=500))
+    print("Input: [random.randint(0, 1000000) for i in range(10000)]")
+    print('Runs: 500')
+    wrapped = wrapper(mergesort, LIST_TWO)
+    print('Average time: ', timeit.timeit(wrapped, number=500))
+    print('***************************************************')
+
+    LIST_ONE = [1, 2, 3, 4]
+    LIST_TWO = [random.randint(0, 1000000) for i in range(10000)]
+    print("Insertion sort")
+    print("Compares each item in the list to its neighbor.")
+    print("It's stable and most efficient on small lists.")
+    print("Input: [1, 2]")
+    wrapped = wrapper(insertionsort, LIST_ONE)
+    print('Runs: 500')
+    print('Average time: ', timeit.timeit(wrapped, number=500))
+    print("Input: [random.randint(0, 1000000) for i in range(10000)]")
+    print('Runs: 500')
+    wrapped = wrapper(insertionsort, LIST_TWO)
+    print('Average time: ', timeit.timeit(wrapped, number=500))
