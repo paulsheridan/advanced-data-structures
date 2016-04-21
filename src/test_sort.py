@@ -7,8 +7,7 @@ EDGE_CASES = [[[100, 100, 100, 100, 100], [100, 100, 100, 100, 100]],
               [[1000000000, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1000000000]],
               [[], []],
               [[1, 100, 1, 100, 1, 100, 1, 100, 1, 100],
-               [1, 1, 1, 1, 1, 100, 100, 100, 100, 100]]
-              ]
+               [1, 1, 1, 1, 1, 100, 100, 100, 100, 100]]]
 
 
 @pytest.fixture(scope='function')
@@ -75,3 +74,21 @@ def test_quick_empty(empty):
 def test_quick_edge_cases(unsorted, sorted):
     from sort import quicksort
     assert quicksort(unsorted) == sorted
+
+
+def test_radix_sort(unsorted):
+    from sort import radixsort
+    sort_list = radixsort(unsorted)
+    for ii in range(1, len(unsorted) - 1):
+        assert sort_list[ii] >= sort_list[ii - 1]
+
+
+def test_radixradix_empty(empty):
+    from sort import radixsort
+    assert radixsort(empty) == []
+
+
+@pytest.mark.parametrize('unsorted, sorted', EDGE_CASES)
+def test_radix_edge_cases(unsorted, sorted):
+    from sort import radixsort
+    assert radixsort(unsorted) == sorted

@@ -64,6 +64,19 @@ def quicksort(in_list):
         return lower + [pivot_value] * in_list.count(pivot_value) + higher
 
 
+def radixsort(in_list):
+    if not in_list:
+        return []
+    radix = 10
+    for iteration in range(len(str(max(in_list)))):
+        buckets = [[] for x in range(10)]
+        for item in in_list:
+            buckets[(item % radix) // (radix // 10)].append(item)
+        radix *= 10
+        in_list = [item for li in buckets for item in li]
+    return in_list
+
+
 def wrapper(func, *args, **kwargs):
     def wrapped():
         return func(*args, **kwargs)
