@@ -3,6 +3,7 @@ import random
 
 
 def insertionsort(in_list):
+    """Implement insertion sort."""
     for idx in range(1, len(in_list)):
         while idx > 0 and in_list[idx] < in_list[idx - 1]:
             in_list[idx], in_list[idx - 1] = in_list[idx - 1], in_list[idx]
@@ -11,6 +12,7 @@ def insertionsort(in_list):
 
 
 def mergesort(in_list):
+    """Implement merge sort."""
     if len(in_list) > 1:
         mid = len(in_list) // 2
         left = mergesort(in_list[:mid])
@@ -21,6 +23,7 @@ def mergesort(in_list):
 
 
 def merge(left, right):
+    """Make the sorted merge list."""
     new = []
     lidx = 0
     ridx = 0
@@ -44,6 +47,7 @@ def merge(left, right):
 
 
 def quicksort(in_list):
+    """Implement quick sort."""
     if len(in_list) <= 1:
         return in_list
     else:
@@ -70,6 +74,17 @@ if __name__ == '__main__':
     import timeit
     LIST_ONE = [2, 1, 4, 3]
     LIST_TWO = [random.randint(0, 1000000) for i in range(10000)]
+    print("Quick Sort")
+    print("Quicksort divides into two smaller arrays on a pivot point\
+and sorts on the two smaller arrays.")
+    print("It's not a stable sort, and most efficient on small lists.")
+    print("Input: [2, 1, 4, 3], Runs: 500")
+    wrapped = wrapper(mergesort, LIST_ONE)
+    print('Total time: ', timeit.timeit(wrapped, number=500))
+    print("Input: [random.randint(0, 1000000) for i in range(10000)], Runs: 500")
+    wrapped = wrapper(mergesort, LIST_TWO)
+    print('Total time: ', timeit.timeit(wrapped, number=500))
+    print('***************************************************')
     print("Merge Sort")
     print("Divides unsorted list into n sublists,\
  and repeatedly sorts and merges sublists into one sorted list.")
