@@ -57,3 +57,21 @@ def test_merge_empty(empty):
 def test_merge_edge_cases(unsorted, sorted):
     from sort import mergesort
     assert mergesort(unsorted) == sorted
+
+
+def test_quick_sort(unsorted):
+    from sort import quicksort
+    sort_list = quicksort(unsorted)
+    for ii in range(1, len(unsorted) - 1):
+        assert sort_list[ii] >= sort_list[ii - 1]
+
+
+def test_quick_empty(empty):
+    from sort import quicksort
+    assert quicksort(empty) == []
+
+
+@pytest.mark.parametrize('unsorted, sorted', EDGE_CASES)
+def test_quick_edge_cases(unsorted, sorted):
+    from sort import quicksort
+    assert quicksort(unsorted) == sorted
