@@ -12,7 +12,7 @@ def insertionsort(in_list):
 
 def mergesort(in_list):
     if len(in_list) > 1:
-        mid = len(in_list)//2
+        mid = len(in_list) // 2
         left = mergesort(in_list[:mid])
         right = mergesort(in_list[mid:])
         return(merge(left, right))
@@ -41,6 +41,23 @@ def merge(left, right):
     elif ridx < len(right):
         new.extend(right[ridx:])
     return new
+
+
+def quicksort(in_list):
+    if len(in_list) <= 1:
+        return in_list
+    else:
+        lower = []
+        higher = []
+        pivot_value = random.choice(in_list)
+        for item in in_list:
+            if item < pivot_value:
+                lower.append(item)
+            if item > pivot_value:
+                higher.append(item)
+        lower = quicksort(lower)
+        higher = quicksort(higher)
+        return lower + [pivot_value] * in_list.count(pivot_value) + higher
 
 
 def wrapper(func, *args, **kwargs):
