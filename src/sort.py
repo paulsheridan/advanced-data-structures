@@ -24,7 +24,6 @@ def merge(left, right):
     new = []
     lidx = 0
     ridx = 0
-    # import pdb; pdb.set_trace()
     while lidx < len(left) and ridx < len(right):
         if left[lidx] < right[ridx]:
             new.append(left[lidx])
