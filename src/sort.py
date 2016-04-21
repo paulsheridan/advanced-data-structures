@@ -65,6 +65,7 @@ def quicksort(in_list):
 
 
 def radixsort(in_list):
+    """Implement Radix Sort."""
     if not in_list:
         return []
     radix = 10
@@ -87,6 +88,19 @@ if __name__ == '__main__':
     import timeit
     LIST_ONE = [2, 1, 4, 3]
     LIST_TWO = [random.randint(0, 1000000) for i in range(10000)]
+    print("Radix Sort")
+    print("Radix sort is a non-comparative integer sorting algorithm that sorts\
+data with integer keys by grouping keys by the individual digits which share\
+ the same significant position and value.")
+    print("It's a stable sort, and most efficient depending on radix assumptions\
+ made.")
+    print("Input: [2, 1, 4, 3], Runs: 500")
+    wrapped = wrapper(mergesort, LIST_ONE)
+    print('Total time: ', timeit.timeit(wrapped, number=500))
+    print("Input: [random.randint(0, 1000000) for i in range(10000)], Runs: 500")
+    wrapped = wrapper(mergesort, LIST_TWO)
+    print('Total time: ', timeit.timeit(wrapped, number=500))
+    print('***************************************************')
     print("Quick Sort")
     print("Quicksort divides into two smaller arrays on a pivot point\
 and sorts on the two smaller arrays.")
