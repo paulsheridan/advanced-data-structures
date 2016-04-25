@@ -10,29 +10,35 @@ class Hashtable(object):
     def set(self, key, value):
         """Store value at given key."""
         if isinstance(key, str):
-            hashed_key = self._hash(key)
-            self.table[hashed_key].append((key, value))
+            bucket = self.table[self._hash(key)]
+            for item in bucket:
+                if item[0] == key:
+                    bucket.remove(item)
+            # bucket = [item for item in bucket if item[0] != key]
+            bucket.append((key, value))
         else:
-            raise KeyError("Please input a string as your key")
+            raise TypeError("Please input a string as your key")
 
     def get(self, key):
         """Return value stored at key."""
         if isinstance(key, str):
-            hashed_key = self._hash(key)
-            for item in self.table[hashed_key]:
+            for item in self.table[self._hash(key)]:
                 if item[0] == key:
                     return item[1]
+            raise KeyError("Key not in hash.")
         else:
-            raise KeyError("Please input a string as your key")
-        pass
+            raise TypeError("Please input a string as your key")
 
     def _hash(self, key):
-        """Hash key and determine index."""
+        """Determine index by hashing key."""
         int_key = self._str_to_bits(key)
         return int_key % self.size
 
     def _str_to_bits(self, string):
-        """Convert unicode to integers."""
+        """
+        Convert string to intiger by converting the string
+        to binary and summing the result.
+        """
         result = []
         for letter in string:
             bits = bin(ord(letter))[2:]
@@ -40,11 +46,3 @@ class Hashtable(object):
             result.extend([int(bit) for bit in bits])
         result = sum(result)
         return result
-
-    # def _bits_to_str(self, bits):
-    #     """Convert bits to strings."""
-    #     letters = []
-    #     for bit in range(len(bits) / 8):
-    #         byte = bits[bit * 8:(bit + 1) * 8]
-    #         letters.append(chr(int(''.join([str(bit) for bit in byte]), 2)))
-    #     return ''.join(letters)
