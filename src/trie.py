@@ -8,17 +8,15 @@ class Trie(object):
         """Initialize."""
         self.root = dict()
 
-    def insert(self, token):
+    def insert(self, input_str):
         """Insert token into trie."""
-        split_token = token.split()
-        for word in split_token:
+        tokens = input_str.split()
+        for token in tokens:
             current = self.root
-            for letter in word:
+            for letter in token:
                 current = current.setdefault(letter, {})
+            current.setdefault('$', {})
 
     def contains(self, token):
         """Return True if token in trie."""
         pass
-
-t = Trie()
-t.insert('to')
