@@ -21,6 +21,18 @@ INSERT_CASES = [['', {}],
               ['ba ab ba ab ba ab ba ab ba ab ba ab ba ab ba ab ba ab', {'a': {'b': {'$': {}}}, 'b': {'a': {'$': {}}}}],
               ]
 
+CONTAINS_CASES = [['w', True],
+                ['to', True],
+                ['ha', True],
+                ['he', True],
+                ['broke', True],
+                ['asdfghj', True],
+                ["that's", True],
+                ["don't", True],
+                ['wrong', True],
+                ['Bork', True],
+]
+
 
 @pytest.fixture(scope='function')
 def new_trie():
@@ -43,3 +55,19 @@ def test_insert_edge_cases(new_trie, case_in, case_out):
     """
     new_trie.insert(case_in)
     assert new_trie.root == case_out
+
+
+@pytest.mark.parametrize('case_in, case_out', CONTAINS_CASES)
+def test_contains(new_trie, case_in, case_out):
+    """Test contains after inserting."""
+    new_trie.insert(case_in)
+    assert new_trie.contains(case_in) == case_out
+    assert new_trie.contains("Nothere") is False
+
+
+def test_contains_with_multiple(new_trie):
+    """Test contains in trie with mutliple branches."""
+    new_trie.insert("multiple words")
+    assert new_trie.contains("words") is True
+    assert new_trie.contains("multiple") is True
+    assert new_trie.contains("multiplewords") is False
