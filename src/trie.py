@@ -19,4 +19,10 @@ class Trie(object):
 
     def contains(self, token):
         """Return True if token in trie."""
-        pass
+        current = self.root
+        try:
+            for letter in token:
+                current = current[letter]
+            return current['$'] == {}
+        except KeyError:
+            return False
