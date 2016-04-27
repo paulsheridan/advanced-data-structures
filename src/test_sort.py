@@ -7,7 +7,19 @@ EDGE_CASES = [[[100, 100, 100, 100, 100], [100, 100, 100, 100, 100]],
               [[1000000000, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1000000000]],
               [[], []],
               [[1, 100, 1, 100, 1, 100, 1, 100, 1, 100],
-               [1, 1, 1, 1, 1, 100, 100, 100, 100, 100]]]
+               [1, 1, 1, 1, 1, 100, 100, 100, 100, 100]],
+              [[1, 4, -2, -6, 3, 5], [-6, -2, 1, 3, 4, 5]],
+              [['c', 'b', 'q', 'a', 'f', 'd'], ['a', 'b', 'c', 'd', 'f', 'q']]]
+
+
+RADIX_CASES = [[[100, 100, 100, 100, 100], [100, 100, 100, 100, 100]],
+               [[999999999999999, 0], [0, 999999999999999]],
+               [[1000000000, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1000000000]],
+               [[], []],
+               [[1, 100, 1, 100, 1, 100, 1, 100, 1, 100],
+               [1, 1, 1, 1, 1, 100, 100, 100, 100, 100]],
+               [[1, 4, -2, -6, 3, 5], [1, 3, 4, -6, 5, -2]],
+               ]
 
 
 @pytest.fixture(scope='function')
@@ -88,7 +100,7 @@ def test_radixradix_empty(empty):
     assert radixsort(empty) == []
 
 
-@pytest.mark.parametrize('unsorted, sorted', EDGE_CASES)
+@pytest.mark.parametrize('unsorted, sorted', RADIX_CASES)
 def test_radix_edge_cases(unsorted, sorted):
     from sort import radixsort
     assert radixsort(unsorted) == sorted
