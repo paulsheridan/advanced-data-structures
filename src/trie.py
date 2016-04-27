@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 class Trie(object):
     """Implementation of Trie class."""
 
@@ -15,16 +17,17 @@ class Trie(object):
     def insert(self, input_str):
         """Insert token into trie."""
         self._validate(input_str)
-        tokens = input_str.split()
+        tokens = input_str.lower().split()
         for token in tokens:
             current = self.root
             for letter in token:
                 current = current.setdefault(letter, {})
             current.setdefault('$', {})
 
-    def contains(self, token):
+    def contains(self, input_str):
         """Return True if token in trie."""
-        self._validate(token)
+        self._validate(input_str)
+        token = input_str.lower()
         current = self.root
         try:
             for letter in token:
