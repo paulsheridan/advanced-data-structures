@@ -36,7 +36,8 @@ class Trie(object):
         except KeyError:
             return False
 
-    def traversal(self, start=None, word=''):
+    def traverse(self, start=None, word=''):
+        """Traverse the Trie and return generator."""
         if not start:
             start = self.root
         for key in start.keys():
@@ -46,8 +47,24 @@ class Trie(object):
                 for each in self.traverse(start[key], word + key):
                     yield each
 
-t = Trie()
-t.insert('potato')
-t.insert('pot')
-t.insert('ralph')
-t.insert('rally')
+    def autocomplete(self, prefix):
+        """Autocomplete given a prefix."""
+        # import pdb; pdb.set_trace()
+        result = []
+        current = self.root
+        for letter in prefix:
+            if letter not in current:
+                return []
+            current = current[letter]
+        # for letter in current:
+        #     result.append(current[letter])
+        # print(result)
+
+
+
+# t = Trie()
+# t.insert('potato')
+# t.insert('pot')
+# t.insert('ralph')
+# t.insert('rally')
+# t.autocomplete('po')
