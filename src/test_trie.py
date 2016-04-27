@@ -57,6 +57,20 @@ CONTAINS_CASES = [['w', 'w', True],
                   ['', '', False]
                   ]
 
+NUM_SYMBOL = 963
+BOOL_SYMBOL = False
+LIST_SYMBOL = ['string']
+DICT_SYMBOL = {'this': 'dict'}
+
+NOT_STR = [123, 12345666, 0, True, False,
+           NUM_SYMBOL, BOOL_SYMBOL, LIST_SYMBOL,
+           DICT_SYMBOL, [4, 5, 6, 'string'], {}]
+
+
+HAS_DOLLAR_SIGN = ['venia$m', '$quis', 'nos$trud',
+                   'exercitation$', '$ullamco$',
+                   'l$aboris', '$$$$$$$$']
+
 
 @pytest.fixture(scope='function')
 def new_trie():
@@ -114,3 +128,30 @@ def test_full_trie_contains(full_trie, test_list):
     """Test contains on a trie with one ipsum's worth of words"""
     for item in test_list:
         assert full_trie.contains(item)
+
+
+@pytest.mark.parametrize('case', NOT_STR)
+def test_validator_not_str(new_trie, case):
+    with pytest.raises(TypeError):
+        new_trie._validate(case)
+
+
+@pytest.mark.parametrize('case', HAS_DOLLAR_SIGN)
+def test_validator_dollar_sign(new_trie, case):
+    with pytest.raises(ValueError):
+        new_trie._validate(case)
+
+
+@pytest.mark.parametrize('case', NOT_STR)
+def test_non_str_insert(new_trie, case):
+    with pytest.raises(TypeError):
+        new_trie.insert(case)
+
+
+@pytest.mark.parametrize('case', HAS_DOLLAR_SIGN)
+def test_insert_dollar_sign(new_trie, case):
+    with pytest.raises(ValueError):
+        new_trie.insert(case)
+
+
+@pytest.mark.parametrize('case')
