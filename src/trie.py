@@ -37,6 +37,7 @@ class Trie(object):
             return False
 
     def traverse(self, start=None, word=''):
+        """Traverse trie and return generator of all words."""
         if not start:
             start = self.root
         for key in start.keys():
@@ -57,7 +58,7 @@ class Trie(object):
             current = current[letter]
         # for letter in current:
         #     result.append(current[letter])
-        # print(result)
+        print(result)
 
 
 
