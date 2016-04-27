@@ -77,6 +77,7 @@ TRAV_CASES = ['a',
               'forget it',
               "I'm going to the pub"]
 
+# AUTOCOMPLETE = [IPSUM, ["ip"]]
 
 @pytest.fixture(scope='function')
 def new_trie():
@@ -171,3 +172,11 @@ def test_redundant_input_traverse(new_trie):
     result = []
     [result.append(item) for item in new_trie.traverse()]
     assert result == ['same']
+
+
+# @pytest.mark.parametrize('ipsum, output', AUTOCOMPLETE)
+def test_autocomplete_output(new_trie):
+    new_trie.insert('Hello')
+    assert new_trie.autocomplete('P') == []
+    assert new_trie.autocomplete('H') == ['hello']
+
