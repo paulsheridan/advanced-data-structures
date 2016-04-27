@@ -1,6 +1,9 @@
 import pytest
 
 
+IPSUM = 'Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum'
+
+
 INSERT_CASES = [['', {}],
                 ['w', {'w': {'$': {}}}],
                 ['to', {'t': {'o': {'$': {}}}}],
@@ -59,6 +62,20 @@ def new_trie():
     return new_trie
 
 
+@pytest.fixture(scope='function')
+def full_trie():
+    from trie import Trie
+    full_trie = Trie()
+    full_trie.insert(IPSUM)
+    return full_trie
+
+
+@pytest.fixture(scope='function')
+def test_list():
+    lorem_list = IPSUM.split()
+    return lorem_list
+
+
 def test_creation(new_trie):
     """Test new trie."""
     assert new_trie.root == {}
@@ -88,3 +105,9 @@ def test_contains_with_multiple(new_trie):
     assert new_trie.contains("words") is True
     assert new_trie.contains("multiple") is True
     assert new_trie.contains("multiplewords") is False
+
+
+def test_full_trie_contains(full_trie, test_list):
+    """Test contains on a trie with one ipsum's worth of words"""
+    for item in test_list:
+        assert full_trie.contains(item)
