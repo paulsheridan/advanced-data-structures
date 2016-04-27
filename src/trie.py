@@ -26,3 +26,13 @@ class Trie(object):
             return current['$'] == {}
         except KeyError:
             return False
+
+    def traverse(self, start=None, word=''):
+        if not start:
+            start = self.root
+        for key in start.keys():
+            if key == '$':
+                yield word
+            else:
+                for each in self.traverse(start[key], word + key):
+                    yield each
