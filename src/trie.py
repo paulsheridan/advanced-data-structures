@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 class Trie(object):
     """Implementation of Trie class."""
 
@@ -49,22 +50,13 @@ class Trie(object):
 
     def autocomplete(self, prefix):
         """Autocomplete given a prefix."""
-        # import pdb; pdb.set_trace()
         result = []
         current = self.root
         for letter in prefix:
             if letter not in current:
                 return []
             current = current[letter]
-        # for letter in current:
-        #     result.append(current[letter])
-        print(result)
-
-
-
-# t = Trie()
-# t.insert('potato')
-# t.insert('pot')
-# t.insert('ralph')
-# t.insert('rally')
-# t.autocomplete('po')
+        output = self.traverse(current)
+        for item in output:
+            result.append(prefix + item)
+        return result
