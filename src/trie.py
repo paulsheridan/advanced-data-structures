@@ -16,7 +16,6 @@ class Trie(object):
 
     def insert(self, input_str):
         """Insert token into trie."""
-        self._validate(input_str)
         tokens = input_str.lower().split()
         for token in tokens:
             current = self.root
@@ -26,7 +25,6 @@ class Trie(object):
 
     def contains(self, input_str):
         """Return True if token in trie."""
-        self._validate(input_str)
         token = input_str.lower()
         current = self.root
         try:
