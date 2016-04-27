@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
 import pytest
-
-
-IPSUM = 'Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum'
-
-
+IPSUM = '''Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
+           eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim
+           ad minim veniam quis nostrud exercitation ullamco laboris nisi ut
+           aliquip ex ea commodo consequat Duis aute irure dolor in
+           reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+           pariatur Excepteur sint occaecat cupidatat non proident sunt in
+           culpa qui officia deserunt mollit anim id est laborum'''
 INSERT_CASES = [['', {}],
                 ['w', {'w': {'$': {}}}],
                 ['to', {'t': {'o': {'$': {}}}}],
@@ -35,7 +38,7 @@ INSERT_CASES = [['', {}],
 
 
 CONTAINS_CASES = [['w', 'w', True],
-                  ['w', 'W', False],
+                  ['w', 'W', True],
                   ['to', 'to', True],
                   ['ha', 'he', False],
                   ['he', 'eh', False],
@@ -48,7 +51,7 @@ CONTAINS_CASES = [['w', 'w', True],
                   ['W w', 'w', True],
                   ['holy shit', 'holy', True],
                   ['one two three', 'four', False],
-                  ['smashing', 'SMASHING', False],
+                  ['smashing', 'SMASHING', True],
                   ['wood-elf', 'wood-elf', True],
                   ['', 'w', False],
                   ['', '', False]
