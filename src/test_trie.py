@@ -35,8 +35,6 @@ INSERT_CASES = [['', {}],
                 ['ba ab ba ab ba ab ba ab ba ab ba ab ba ab ba ab ba ab',
                  {'a': {'b': {'$': {}}}, 'b': {'a': {'$': {}}}}],
                 ]
-
-
 CONTAINS_CASES = [['w', 'w', True],
                   ['w', 'W', True],
                   ['to', 'to', True],
@@ -56,20 +54,28 @@ CONTAINS_CASES = [['w', 'w', True],
                   ['', 'w', False],
                   ['', '', False]
                   ]
-
 NUM_SYMBOL = 963
 BOOL_SYMBOL = False
 LIST_SYMBOL = ['string']
 DICT_SYMBOL = {'this': 'dict'}
-
 NOT_STR = [123, 12345666, 0, True, False,
            NUM_SYMBOL, BOOL_SYMBOL, LIST_SYMBOL,
            DICT_SYMBOL, [4, 5, 6, 'string'], {}]
-
-
 HAS_DOLLAR_SIGN = ['venia$m', '$quis', 'nos$trud',
                    'exercitation$', '$ullamco$',
                    'l$aboris', '$$$$$$$$']
+TRAV_CASES = ['a',
+              'paul',
+              'carnivale',
+              'spinmove'
+              'this is the first one',
+              'this is one of the second ones',
+              'no wait that was the only second one',
+              "well now we've skipped the third one",
+              'wait where did four go?',
+              'you know what',
+              'forget it',
+              "I'm going to the pub"]
 
 
 @pytest.fixture(scope='function')
@@ -154,4 +160,14 @@ def test_insert_dollar_sign(new_trie, case):
         new_trie.insert(case)
 
 
-@pytest.mark.parametrize('case')
+@pytest.mark.parametrize('case', TRAV_CASES)
+def test_basic_traverse(new_trie, case):
+    new_trie.insert(case)
+    assert any(map(lambda v: v in new_trie.traverse(), case.split()))
+
+
+def test_redundant_input_traverse(new_trie):
+    new_trie.insert('same same same same same same same same same')
+    result = []
+    [result.append(item) for item in new_trie.traverse()]
+    assert result == ['same']

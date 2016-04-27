@@ -36,7 +36,7 @@ class Trie(object):
         except KeyError:
             return False
 
-    def traversal(self, start=None, word=''):
+    def traverse(self, start=None, word=''):
         if not start:
             start = self.root
         for key in start.keys():
