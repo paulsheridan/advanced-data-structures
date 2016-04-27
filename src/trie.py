@@ -37,7 +37,6 @@ class Trie(object):
             return False
 
     def traverse(self, start=None, word=''):
-        """Traverse the Trie and return generator."""
         if not start:
             start = self.root
         for key in start.keys():
