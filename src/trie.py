@@ -1,6 +1,3 @@
-# alphabet, ( ' ), ( $ )
-
-
 class Trie(object):
     """Implementation of Trie class."""
 
@@ -8,8 +5,16 @@ class Trie(object):
         """Initialize."""
         self.root = dict()
 
+    def _validate(self, token):
+        """Check for valid input."""
+        if not isinstance(token, str):
+            raise TypeError('Only strings plz')
+        if "$" in token:
+            raise ValueError('Do not include $ in the token')
+
     def insert(self, input_str):
         """Insert token into trie."""
+        self._validate(input_str)
         tokens = input_str.split()
         for token in tokens:
             current = self.root
@@ -19,6 +24,7 @@ class Trie(object):
 
     def contains(self, token):
         """Return True if token in trie."""
+        self._validate(token)
         current = self.root
         try:
             for letter in token:
@@ -36,3 +42,9 @@ class Trie(object):
             else:
                 for each in self.traverse(start[key], word + key):
                     yield each
+
+t = Trie()
+t.insert('potato')
+t.insert('pot')
+t.insert('ralph')
+t.insert('rally')
