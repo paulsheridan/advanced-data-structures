@@ -1,8 +1,20 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-
 FILE_PATH = '/usr/share/dict/words'
+SET_VALS = [('key', 'value'),
+            ('high', 'five'),
+            ('someone', 'somewhere'),
+            ('shut it up', 'you'),
+            ('shut it up', 'me'),
+            ('olli', 'olli'),
+            ('hula', 'hoop'),
+            ('nums', 938275401),
+            ('list', [1, 2, 3]),
+            ('dict', {'test': 'hash'}),
+            ('baseball', 'game'),
+            ('a', 'z'),
+            ]
 
 
 @pytest.fixture(scope='function')
@@ -15,7 +27,7 @@ def new_hash():
 @pytest.fixture(scope='function')
 def large_hash():
     from hash import Hashtable
-    hashtable = Hashtable(1024)
+    hashtable = Hashtable(1021)
     return hashtable
 
 
@@ -42,11 +54,11 @@ def test_same_key_insert(new_hash):
     assert new_hash.get('test') == 'value'
 
 
-def test_full_hashtable(large_hash):
-    f = open(FILE_PATH, 'r')
-    for line in f.read().splitlines():
-        large_hash.set(line, line)
-        assert large_hash.get(line) == line
+# def test_full_hashtable(large_hash):
+#     f = open(FILE_PATH, 'r')
+#     for line in f.read().splitlines():
+#         large_hash.set(line, line)
+#         assert large_hash.get(line) == line
 
 
 def test_key_error(new_hash):
@@ -63,7 +75,10 @@ def test_key_error(new_hash):
 
 
 def test_hash(new_hash):
-    """Test hashing function returns correct hash for key."""
+    """
+    Test hashing function returns
+    correct hash for key.
+    """
     assert new_hash._hash("key") == 3
 
 
@@ -82,9 +97,8 @@ def test_nonexistent_keys(new_hash):
         assert new_hash.get('some other key')
 
 
-def test_set(new_hash):
-    """
-    Test set method all by itself.
-    """
-    new_hash.set('test', 'value')
-    assert ('test', 'value') in new_hash.table[new_hash._hash('test')]
+@pytest.mark.parametrize('test_key, test_val', SET_VALS)
+def test_only_set(new_hash, test_key, test_val):
+    """Test set method all by itself."""
+    new_hash.set(test_key, test_val)
+    assert (test_key, test_val) in new_hash.table[new_hash._hash(test_key)]
