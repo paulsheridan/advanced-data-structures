@@ -93,9 +93,17 @@ AUTOCOMPLETE_CASES = [['bears beets battlestar galactica', 'b',
                        ['store', 'stick', 'stanza', 'street', 'stop']],
                       ['word word word words', 'w',
                        ['word', 'words']],
-                      [IPSUM, 'c', ['cillum', 'commodo', 'consectetur', 'consequat', 'culpa']]]
-
-# AUTOCOMPLETE = [IPSUM, ["ip"]]
+                      [IPSUM, 'c', ['cillum',
+                                    'commodo',
+                                    'consectetur',
+                                    'consequat',
+                                    'culpa',
+                                    'cupidatat']],
+                      ['c c c c c c c c c c c c c c c c', 'c', ['c']],
+                      ['cat cats caterpillar caterpillars', 'cat',
+                       ['cat', 'caterpillar', 'caterpillars', 'cats']],
+                      ['cat cats caterpillar caterpillars', 'cats',
+                       ['cats']]]
 
 
 @pytest.fixture(scope='function')

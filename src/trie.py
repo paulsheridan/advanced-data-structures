@@ -50,6 +50,7 @@ class Trie(object):
 
     def autocomplete(self, prefix):
         """Autocomplete given a prefix."""
+        self._validate(prefix)
         prefix = prefix.lower()
         result = []
         current = self.root
