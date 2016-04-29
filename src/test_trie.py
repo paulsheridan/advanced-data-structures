@@ -103,7 +103,39 @@ AUTOCOMPLETE_CASES = [['bears beets battlestar galactica', 'b',
                       ['cat cats caterpillar caterpillars', 'cat',
                        ['cat', 'caterpillar', 'caterpillars', 'cats']],
                       ['cat cats caterpillar caterpillars', 'cats',
-                       ['cats']]]
+                       ['cats']],
+                      ['cat cats caterpillar caterpillars', 'catse',
+                       []],
+                      ['cat cats caterpillar caterpillars', 'bats',
+                       []],
+                      ['cat cats caterpillar caterpillars', 'caterl',
+                       []],
+                      ['''i have been completely unable to maintain
+                       any semblance of relationship on any level''', 'omp',
+                       []],
+                      ['''i have been a bastard to the people who have
+                       actively attempted to deliver me from peril''', 'a',
+                       ['a', 'actively', 'attempted']],
+                      ['''i have been acutely undeserving of the ear that
+                       listen up and lip that kiss me on the temple''', 'li',
+                       ['listen', 'lip']],
+                      ['''i have been accustomed to a
+                       stubborn disposition that admits
+                       its history disassembled''', 'dis',
+                       ['disposition', 'disassembled']],
+                      ['''i have been a hypocrit in sermonizing tolerance
+                       while skimming for a ministry to pretzel''', 'skiming',
+                       []],
+                      ['''i have been unfairly resentful of
+                       those who i wish had acted differently
+                       when the bidding was essential''', 'i',
+                       ['i']],
+                      ['''i have been a terrible communicator prone to
+                       isolation over sympathy for devils''', 'terr',
+                       ['terrible']],
+                      ['''i have been my own worst enemy since the
+                       very genesis of rebels''', 'verif',
+                       []]]
 
 
 @pytest.fixture(scope='function')
