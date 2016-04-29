@@ -50,15 +50,16 @@ class Trie(object):
 
     def autocomplete(self, prefix):
         """Autocomplete given a prefix."""
+        self._validate(prefix)
         prefix = prefix.lower()
         result = []
         current = self.root
         for letter in prefix:
             if letter in current:
                 current = current[letter]
-            else:
-                return []
-        output = self.traverse(current)
+                output = self.traverse(current)
+            elif letter not in current:
+                return
         for item in output:
             result.append(prefix + item)
-        return result
+            yield result

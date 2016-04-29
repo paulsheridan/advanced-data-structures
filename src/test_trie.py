@@ -174,9 +174,20 @@ def test_redundant_input_traverse(new_trie):
     assert result == ['same']
 
 
-# @pytest.mark.parametrize('ipsum, output', AUTOCOMPLETE)
 def test_autocomplete_output(new_trie):
     new_trie.insert('Hello')
-    assert new_trie.autocomplete('P') == []
-    assert new_trie.autocomplete('H') == ['hello']
+    assert list(new_trie.autocomplete('P')) == []
+    assert list(new_trie.autocomplete('H')) == [['hello']]
 
+
+def test_autocomplete_multiple(new_trie):
+    new_trie.insert('banana')
+    new_trie.insert('batch')
+    new_trie.insert('between')
+    new_trie.insert('bee')
+    new_trie.insert('bachelor')
+    assert list(new_trie.autocomplete('b')) == [['banana', 'batch', 'bachelor', 'between', 'bee'],
+                                                ['banana', 'batch', 'bachelor', 'between', 'bee'],
+                                                ['banana', 'batch', 'bachelor', 'between', 'bee'],
+                                                ['banana', 'batch', 'bachelor', 'between', 'bee'],
+                                                ['banana', 'batch', 'bachelor', 'between', 'bee']]
