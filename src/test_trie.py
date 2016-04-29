@@ -76,8 +76,27 @@ TRAV_CASES = ['a',
               'you know what',
               'forget it',
               "I'm going to the pub"]
+AUTOCOMPLETE_CASES = [['bears beets battlestar galactica', 'b',
+                       ['battlestar', 'bears', 'beets']],
+                      ['bears beets battlestar galactica', 'ba',
+                       ['battlestar']],
+                      ['bears beets battlestar galactica', 'be',
+                       ['bears', 'beets']],
+                      ['bears beets battlestar galactica', 'bea',
+                       ['bears']],
+                      ['bears beets battlestar galactica', 'g',
+                       ['galactica']],
+                      ['bears beets battlestar galactica', '',
+                       ['bears', 'beets', 'battlestar', 'galactica']],
+                      ['', '', []],
+                      ['store stick stanza street stop', 's',
+                       ['store', 'stick', 'stanza', 'street', 'stop']],
+                      ['word word word words', 'w',
+                       ['word', 'words']],
+                      [IPSUM, 'c', ['cillum', 'commodo', 'consectetur', 'consequat', 'culpa']]]
 
 # AUTOCOMPLETE = [IPSUM, ["ip"]]
+
 
 @pytest.fixture(scope='function')
 def new_trie():
@@ -177,17 +196,13 @@ def test_redundant_input_traverse(new_trie):
 def test_autocomplete_output(new_trie):
     new_trie.insert('Hello')
     assert list(new_trie.autocomplete('P')) == []
-    assert list(new_trie.autocomplete('H')) == [['hello']]
+    assert list(new_trie.autocomplete('H')) == ['hello']
 
 
-def test_autocomplete_multiple(new_trie):
-    new_trie.insert('banana')
-    new_trie.insert('batch')
-    new_trie.insert('between')
-    new_trie.insert('bee')
-    new_trie.insert('bachelor')
-    assert list(new_trie.autocomplete('b')) == [['banana', 'batch', 'bachelor', 'between', 'bee'],
-                                                ['banana', 'batch', 'bachelor', 'between', 'bee'],
-                                                ['banana', 'batch', 'bachelor', 'between', 'bee'],
-                                                ['banana', 'batch', 'bachelor', 'between', 'bee'],
-                                                ['banana', 'batch', 'bachelor', 'between', 'bee']]
+@pytest.mark.parametrize('words, search, result', AUTOCOMPLETE_CASES)
+def test_autocomplete_multiple(new_trie, words, search, result):
+    new_trie.insert(words)
+    autocomp = new_trie.autocomplete(search)
+    for item in autocomp:
+        assert item in result
+    assert len(autocomp) <= 4
