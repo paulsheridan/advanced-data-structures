@@ -2,7 +2,7 @@
 class Hashtable(object):
     """Implement a hashtable."""
 
-    def __init__(self, size=11):
+    def __init__(self, size=1024):
         """Initialize table."""
         self.size = size
         self.table = [[] for x in range(self.size)]
