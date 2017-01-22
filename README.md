@@ -1,4 +1,4 @@
-# advanced-data-structures
+# data-structures-2
 A new data structures repo, brimming with some higher-level data structures.
 
 ## Binary Search Tree
